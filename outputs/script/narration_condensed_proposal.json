@@ -1,0 +1,74 @@
+[
+  {
+    "id": "S01",
+    "tigrinya": "ነበረያ ነበረ! ኣብ ጫካ እንስሳታት ብሰላም ይነብሩ።",
+    "english": "Long ago, animals lived peacefully in a forest.",
+    "chars": 33
+  },
+  {
+    "id": "S02",
+    "tigrinya": "መራሒኦምን ንጉሶምን ኣያ ኣንበሳ ነበረ።",
+    "english": "Their leader and king was Aya Anbesa.",
+    "chars": 26
+  },
+  {
+    "id": "S03",
+    "tigrinya": "ሓደ መዓልቲ፣ ኣድጊን ነብርን ከዕልሉ ጀመሩ።",
+    "english": "One day, the donkey and the leopard began chatting.",
+    "chars": 28
+  },
+  {
+    "id": "S04",
+    "tigrinya": "ኣድጊ ነቲ ሳዕሪ እናረኣየ፣ «እዚ ሳዕሪ ሰማያዊ እዩ» በለ።",
+    "english": "Looking at the grass, the donkey said, 'This grass is blue.'",
+    "chars": 38
+  },
+  {
+    "id": "S05",
+    "tigrinya": "ነብሪ «ኣይፋልካን፣ ቀጠልያ እዩ፣ ዓይንኻ ድዩ ተበላሽዩ?» ኢሉ መለሰ።",
+    "english": "The leopard replied, 'No, it is green! Are your eyes broken?'",
+    "chars": 45
+  },
+  {
+    "id": "S06",
+    "tigrinya": "«ንዑ ናብ ንጉስና ኣያ ኣንበሳ ንኺድ» ተባሃሃሉ።",
+    "english": "'Let us go to King Aya Anbesa,' they said.",
+    "chars": 29
+  },
+  {
+    "id": "S07",
+    "tigrinya": "ኣድጊ «ኦ ንጉስ፣ እዚ ሳዕሪ ሰማያዊ ምዃኑ ይካትዓኒ ኣሎ» በሎ።",
+    "english": "Donkey said, 'O King, he disputes that this grass is blue.'",
+    "chars": 41
+  },
+  {
+    "id": "S08",
+    "tigrinya": "ኣያ ኣንበሳ «እወ፣ እቲ ሳዕሪ ሰማያዊ እዩ» ኢሉ ፈረደ።",
+    "english": "Aya Anbesa calmly ruled, 'Yes, the grass is blue.'",
+    "chars": 36
+  },
+  {
+    "id": "S09",
+    "tigrinya": "ነብሪ ሓዚኑ «ኦ ንጉስ፣ ስለምንታይ ሰማያዊ እዩ ኢልካ ፈሪድካ?» ሓተቶ።",
+    "english": "Saddened, the leopard asked, 'O King, why did you rule it is blue?'",
+    "chars": 46
+  },
+  {
+    "id": "S10",
+    "tigrinya": "ንጉስ ኣያ ኣንበሳ፦ «እቲ ሳዕሪ ቀጠልያ ምዃኑስ ኣጸቢቐ እፈልጥ እየ።»",
+    "english": "King Aya Anbesa said: 'I know very well that the grass is green.'",
+    "chars": 45
+  },
+  {
+    "id": "S11",
+    "tigrinya": "«ምስ ሓደ ዓሻ ኣድጊ ግዜኻ ኣጥፊእካ ክትካታዕ ስለዝወሰንካ እዩ!»",
+    "english": "'Because you chose to waste your time arguing with a foolish donkey!'",
+    "chars": 42
+  },
+  {
+    "id": "S12",
+    "tigrinya": "ነብሪ ጥበብ ንጉሱ ተረዲኡ ከደ።",
+    "english": "Understanding his king's wisdom, the leopard went on his way.",
+    "chars": 20
+  }
+]

@@ -1,32 +1,46 @@
 {
   "version": 1,
-  "title": "EXAMPLE - replace with your story (python film.py draft)",
-  "logline": "An old woman roasting coffee at dawn remembers the proverb her mother taught her, and passes it to her grandson.",
-  "audience": "PLACEHOLDER: diaspora cousins aged 18-35 watching on their phones, vertical, who know the coffee ceremony but not the proverb.",
-  "intent": "PLACEHOLDER: they should feel the patience of the ceremony and want to call their grandmother.",
-  "language": { "code": "en", "name": "English", "fallback_code": "en" },
+  "title": "King of the Beasts, Aya Anbesa (Is the grass green or blue?)",
+  "title_native": "ንጉስ ኣራዊት ኣያ ኣንበሳ (እቲ ሳዕሪ ቀጠልያ ድዩ ሰማያዊ?)",
+  "logline": "When a stubborn donkey and a clever leopard quarrel over whether the grass is blue or green, King Aya Anbesa delivers a surprising verdict that teaches a timeless lesson about wasting wisdom on fools.",
+  "audience": "Tigrinya-speaking families in the diaspora and home regions watching on mobile screens, especially parents sharing heritage tales with children aged 6–12.",
+  "intent": "To delight audiences with a humorous fable and leave them reflecting on the wisdom of avoiding pointless arguments with those who refuse to see the truth.",
+  "language": {
+    "code": "ti",
+    "name": "Tigrinya",
+    "fallback_code": "am"
+  },
   "style": {
-    "block": "Warm hand-painted gouache illustration, soft grain, golden-hour light, earthy ochre and indigo palette, gentle shadows, calm and intimate",
-    "negative": "photorealistic, text, letters, watermark, extra fingers"
+    "block": "Warm hand-painted storybook illustration, gouache texture, soft grain, rich vibrant greens and warm ochres, golden ambient daylight, fairytale aesthetic.",
+    "negative": "photorealistic, 3D render, text, signage, watermark, modern objects, dark gritty tone, neon lighting"
   },
   "characters": [
     {
-      "id": "grandmother",
-      "name": "Grandmother",
-      "description": "a fictional Tigrayan woman in her seventies, slim, kind lined face, white netsela shawl with a thin green-and-gold border, silver cross pendant",
-      "real_person": false
+      "id": "aya_anbesa",
+      "name": "Aya Anbesa",
+      "description": "an old, calm, dignified lion with a thick dark-golden mane, a few grey hairs on the muzzle, kind amber eyes, and a simple woven gold band on his head.",
+      "real_person": false,
+      "reference_seed": 701
     },
     {
-      "id": "grandson",
-      "name": "Grandson",
-      "description": "a fictional boy of about nine, short curly hair, faded blue t-shirt, bright curious eyes",
-      "real_person": false
+      "id": "adgi",
+      "name": "Adgi",
+      "description": "a stubborn grey donkey with a white muzzle and belly, long dark-tipped ears, a short bristly mane, and a small red tassel on his halter.",
+      "real_person": false,
+      "reference_seed": 702
+    },
+    {
+      "id": "nebri",
+      "name": "Nebri",
+      "description": "a slender, clever leopard with a golden coat and black rosettes, bright green eyes, and a long curved tail.",
+      "real_person": false,
+      "reference_seed": 703
     }
   ],
   "narration": {
     "voice": "Kore",
-    "style_prompt": "Read slowly and warmly, like an elder telling a story by the fire. Leave small pauses between sentences.",
-    "words_per_second": 2.2
+    "style_prompt": "Read warmly, unhurriedly, and expressively in the style of a grandparent telling a fable to children, with gentle humor during the argument and deep calm for the verdict.",
+    "words_per_second": 2.1
   },
   "music": {
     "chosen": null,
@@ -35,86 +49,306 @@
       {
         "id": "score",
         "start_shot": "S01",
-        "caption": "instrumental, gentle Ethiopian krar plucking with soft string pad, warm and nostalgic, sparse texture, no lead melody, slow build, theme returns at the end",
+        "caption": "instrumental Ethiopian folk tale underscore, playful krar plucking, soft masenqo drone, gentle hand percussion, warm and light, sparse texture with no strong lead melody, builds a little in the middle, quiet pause, warm resolving theme at the end",
         "lyrics": "[Instrumental]",
-        "duration_s": 80,
-        "bpm": 72,
+        "duration_s": 90,
+        "bpm": 76,
         "key": "A minor",
-        "seeds": [11, 22, 33],
-        "purpose": "Underscore that leaves room for the voice, lifts at the hand-over, resolves on the end card."
+        "seeds": [
+          11,
+          22,
+          33
+        ],
+        "purpose": "Playful underscore that leaves room for the voice; lifts during the quarrel, drops for the verdict, returns warm for the lesson."
       }
     ]
   },
   "shots": [
     {
-      "id": "S01", "beat": "dawn", "shot_size": "extreme_wide", "duration_s": 6, "seed": 101,
-      "reason": "Establishes the village and the hour before we meet anyone.",
+      "id": "S01",
+      "beat": "Introduction to the kingdom",
+      "reason": "Establishes the tranquil highland forest setting and classic fable atmosphere.",
+      "duration_s": 7.0,
+      "shot_size": "wide",
       "characters": [],
-      "image_prompt": "A small stone house on a highland hillside at dawn, smoke rising from the roof, terraced fields and distant mountains",
-      "motion": { "prompt": "smoke drifts slowly upward, camera holds still", "fallback": "push_in", "use_video": true },
-      "narration": { "text": "Every morning, before the village wakes, my grandmother lights the fire.", "english": "Every morning, before the village wakes, my grandmother lights the fire." }
+      "image_prompt": "A serene highland forest meadow in full daylight, tall green grass blowing in a soft breeze beneath sweeping acacia trees under bright sunny skies.",
+      "seed": 101,
+      "motion": {
+        "prompt": "camera slowly pans right across the vibrant green meadow",
+        "fallback": "pan_right",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ነበረያ ነበረ! ኣብ ሓደ ዓቢ ጫካ፣ ኩሎም እንስሳታት ብሰላም ዝነብሩሉ ቦታ ነበረ።",
+        "english": "Long ago, in a great forest, all animals lived together in peace."
+      }
     },
     {
-      "id": "S02", "beat": "ritual", "shot_size": "medium", "duration_s": 6, "seed": 102,
-      "reason": "Introduces the grandmother through what her hands do every day.",
-      "characters": ["grandmother"],
-      "image_prompt": "The grandmother kneels by a small charcoal brazier inside the house, roasting green coffee beans in a flat iron pan",
-      "motion": { "prompt": "she gently shakes the pan, smoke curls up, camera fixed", "fallback": "pan_right", "use_video": true },
-      "narration": { "text": "She roasts the beans slowly. She never hurries them.", "english": "She roasts the beans slowly. She never hurries them." }
+      "id": "S02",
+      "beat": "King Aya Anbesa on his rock",
+      "reason": "Introduces the respected and fair ruler of the forest kingdom.",
+      "duration_s": 7.0,
+      "shot_size": "medium",
+      "characters": [
+        "aya_anbesa"
+      ],
+      "image_prompt": "Aya Anbesa sitting regally atop a smooth stone outcrop surrounded by lush green foliage, gazing forward with a peaceful demeanor.",
+      "seed": 102,
+      "motion": {
+        "prompt": "camera pushes in slowly toward Aya Anbesa as he breathes calmly",
+        "fallback": "push_in",
+        "use_video": true
+      },
+      "narration": {
+        "text": "መራሒኦምን ንጉሶምን ድማ ኣያ ኣንበሳ ነበረ። ብፍትሓውነቱ ኣብ ቅድሚ ኩሎም ዓቢ ክብሪ ነበሮ።",
+        "english": "Their ruler was King Aya Anbesa, respected by all for his justice."
+      }
     },
     {
-      "id": "S03", "beat": "detail", "shot_size": "insert", "duration_s": 6, "seed": 103,
-      "reason": "A close detail of the beans turning dark carries the idea of patience.",
-      "characters": [],
-      "image_prompt": "Close view of coffee beans darkening in an iron pan over glowing coals, oily sheen, wisps of smoke",
-      "motion": { "prompt": "beans shift slightly, smoke rises, slow push in", "fallback": "push_in", "use_video": true },
-      "narration": { "text": "The smoke fills the room, and the whole house smells of coffee.", "english": "The smoke fills the room, and the whole house smells of coffee." }
+      "id": "S03",
+      "beat": "Adgi and Nebri meeting",
+      "reason": "Sets up the encounter between the donkey and the leopard in the meadow.",
+      "duration_s": 7.0,
+      "shot_size": "wide",
+      "characters": [
+        "adgi",
+        "nebri"
+      ],
+      "image_prompt": "Adgi the donkey and Nebri the leopard standing together in the open meadow, surrounded by deep green grass beneath clear blue daylight.",
+      "seed": 103,
+      "motion": {
+        "prompt": "camera gently pans left as the two animals face each other",
+        "fallback": "pan_left",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ሓደ መዓልቲ፣ ኣድጊን ነብርን ኣብ ሓደ ሜዳ ተራኺቦም ከዕልሉ ጀመሩ።",
+        "english": "One day, the donkey and the leopard met chatting in a green meadow."
+      }
     },
     {
-      "id": "S04", "beat": "arrival", "shot_size": "wide", "duration_s": 7, "seed": 104,
-      "reason": "Brings in the grandson so the story has someone to pass to.",
-      "characters": ["grandmother", "grandson"],
-      "image_prompt": "The grandson sits on a low stool watching the grandmother pour water into a black clay jebena by the fire",
-      "motion": { "prompt": "the boy leans forward slightly, firelight flickers, camera fixed", "fallback": "pull_out", "use_video": true },
-      "narration": { "text": "When I was small, I asked her why it takes so long.", "english": "When I was small, I asked her why it takes so long." }
+      "id": "S04",
+      "beat": "Adgi claims the grass is blue",
+      "reason": "Captures the absurdity of the donkey claiming the green grass is blue.",
+      "duration_s": 7.5,
+      "shot_size": "medium_close_up",
+      "characters": [
+        "adgi"
+      ],
+      "image_prompt": "Adgi the donkey pointing his hoof down at the clearly bright green grass, raising his snout stubbornly with confidence.",
+      "seed": 104,
+      "motion": {
+        "prompt": "Adgi nods his head assertively as camera pushes in slightly",
+        "fallback": "push_in",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ኣድጊ ነቲ ኣብ እግሮም ዘሎ ሳዕሪ እናረኣየ፣ «እዚ ሳዕሪ እዚ ሰማያዊ እዩ» በለ።",
+        "english": "Looking at the grass at their feet, the donkey said, 'This grass is blue.'"
+      }
     },
     {
-      "id": "S05", "beat": "proverb", "shot_size": "close_up", "duration_s": 7, "seed": 105,
-      "reason": "The grandmother's face as she speaks the proverb is the emotional centre.",
-      "characters": ["grandmother"],
-      "image_prompt": "Close portrait of the grandmother smiling softly, firelight on her face, eyes looking at the boy just off-frame",
-      "motion": { "prompt": "she blinks slowly and smiles, very slow push in", "fallback": "push_in", "use_video": true },
-      "narration": { "text": "She smiled and said: slowly, slowly, an egg will walk on its own legs.", "english": "She smiled and said: \"Slowly, slowly, an egg will walk on its own legs.\"" }
+      "id": "S05",
+      "beat": "Nebri corrects the donkey",
+      "reason": "Shows Nebri's disbelief and assertion that the grass is green.",
+      "duration_s": 7.5,
+      "shot_size": "medium_close_up",
+      "characters": [
+        "nebri"
+      ],
+      "image_prompt": "Nebri the leopard looking confused and amazed, looking down at the green grass and extending a paw in protest.",
+      "seed": 105,
+      "motion": {
+        "prompt": "Nebri tilts his head in disbelief, camera pans right gently",
+        "fallback": "pan_right",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ነብሪ ተገሪሙ፣ «ኣይፋልካን፣ እዚ ሳዕሪ እዚ ቀጠልያ እዩ፣ ዓይንኻ ድዩ ተበላሽዩ?» ኢሉ መለሰሉ።",
+        "english": "Astonished, the leopard replied: 'No! This grass is green. Are your eyes broken?'"
+      },
+      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
     },
     {
-      "id": "S06", "beat": "meaning", "shot_size": "medium_close_up", "duration_s": 7, "seed": 106,
-      "reason": "Gives the meaning of the proverb a picture of growth.",
-      "characters": [],
-      "image_prompt": "A small chick stepping out of a cracked egg on straw in morning light near a doorway",
-      "motion": { "prompt": "the chick takes one small step, camera holds", "fallback": "static", "use_video": true },
-      "narration": { "text": "Good things take their time. Patience turns small things into living things.", "english": "Good things take their time. Patience turns small things into living things." }
+      "id": "S06",
+      "beat": "Journey to the king",
+      "reason": "Shows the escalated quarrel leading them to seek royal arbitration.",
+      "duration_s": 7.5,
+      "shot_size": "wide",
+      "characters": [
+        "adgi",
+        "nebri"
+      ],
+      "image_prompt": "Adgi and Nebri walking side-by-side along a grassy hill path towards a majestic rock formation in warm afternoon sun.",
+      "seed": 106,
+      "motion": {
+        "prompt": "camera tracks forward behind them as they walk toward the royal rock",
+        "fallback": "push_in",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ክርክሮም ናብ ባእሲ ተቐየረ። «ንዑ ናብ ንጉስና ኣያ ኣንበሳ ንኺድ» ተባሃሂሎም ከዱ።",
+        "english": "Their quarrel grew fierce. 'Let us go to King Aya Anbesa for judgment!'"
+      }
     },
     {
-      "id": "S07", "beat": "hand-over", "shot_size": "close_up", "duration_s": 7, "seed": 107,
-      "reason": "The cup passing between hands is the moment the tradition is handed down.",
-      "characters": ["grandmother", "grandson"],
-      "image_prompt": "Close view of the grandmother's hands passing a small white cup of coffee into the boy's small hands",
-      "motion": { "prompt": "hands move slowly together, steam rises from the cup, camera fixed", "fallback": "pan_up", "use_video": true },
-      "narration": { "text": "Now I live far away. But every morning, I make the coffee slowly.", "english": "Now I live far away. But every morning, I make the coffee slowly." }
+      "id": "S07",
+      "beat": "Presenting the dispute",
+      "reason": "Brings the conflict before the calm and listening King Lion.",
+      "duration_s": 8.0,
+      "shot_size": "medium",
+      "characters": [
+        "aya_anbesa",
+        "adgi",
+        "nebri"
+      ],
+      "image_prompt": "Adgi speaking eagerly in front of Aya Anbesa who rests on his rock seat, with Nebri standing nearby waiting quietly.",
+      "seed": 107,
+      "motion": {
+        "prompt": "camera slowly tilts up from Adgi to Aya Anbesa listening intently",
+        "fallback": "pan_up",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ኣድጊ ቀዲሙ፣ «ኦ ንጉስና! እዚ ሳዕሪ ሰማያዊ ምዃኑ እናነገርክዎ ይካትዓኒ ኣሎ» በሎ።",
+        "english": "The donkey spoke first: 'O King! He disputes that the grass is blue.'"
+      }
     },
     {
-      "id": "S08", "beat": "return", "shot_size": "wide", "duration_s": 8, "seed": 108,
-      "reason": "Returns to the opening house in full daylight to close the circle.",
-      "characters": [],
-      "image_prompt": "The same small stone house on the highland hillside in bright morning light, smoke rising from the roof, birds in the sky",
-      "motion": { "prompt": "birds glide across the sky, camera pulls back slowly", "fallback": "pull_out", "use_video": true },
-      "narration": { "text": "And I hear her voice: slowly, slowly.", "english": "And I hear her voice: \"Slowly, slowly.\"" }
+      "id": "S08",
+      "beat": "The Lion's surprising ruling",
+      "reason": "Delivers the key dramatic turning point where the King agrees with the donkey.",
+      "duration_s": 7.5,
+      "shot_size": "close_up",
+      "characters": [
+        "aya_anbesa"
+      ],
+      "image_prompt": "Close-up of Aya Anbesa looking dignified and serious, speaking calmly under soft golden sunlight.",
+      "seed": 108,
+      "motion": {
+        "prompt": "Aya Anbesa nods slowly while speaking, camera remains steady",
+        "fallback": "static",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ኣያ ኣንበሳ ንኽልቲኦም ጽን ኢሉ ምስ ሰምዐ፣ ብህድኣት «እወ፣ እቲ ሳዕሪ ሰማያዊ እዩ» ኢሉ ፈረደ።",
+        "english": "Aya Anbesa listened and calmly ruled: 'Yes, the grass is blue.'"
+      }
+    },
+    {
+      "id": "S09",
+      "beat": "Donkey leaves, Leopard questions",
+      "reason": "Highlights the donkey's joyful exit and the leopard's hurt confusion.",
+      "duration_s": 8.0,
+      "shot_size": "medium",
+      "characters": [
+        "adgi",
+        "nebri",
+        "aya_anbesa"
+      ],
+      "image_prompt": "Adgi trotting away happily in the background, while in the foreground Nebri bows close to Aya Anbesa with a puzzled look.",
+      "seed": 109,
+      "motion": {
+        "prompt": "camera pulls back as Adgi leaves and Nebri turns toward the lion",
+        "fallback": "pull_out",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ኣድጊ እናሰሓቐ ከደ። ነብሪ ግን ሓዚኑ «ኦ ንጉስ፣ ስለምንታይ እዩ ሰማያዊ እዩ ኢልካ ፈሪድካ?» ኢሉ ሓተቶ።",
+        "english": "The donkey left laughing. Hurt, the leopard asked, 'Why say it is blue?'"
+      }
+    },
+    {
+      "id": "S10",
+      "beat": "The moral lesson revealed",
+      "reason": "The twist: the king admits he knows the grass is green, so the verdict was never about the grass.",
+      "duration_s": 8.5,
+      "shot_size": "close_up",
+      "characters": [
+        "aya_anbesa"
+      ],
+      "image_prompt": "Aya Anbesa smiling warmly and wisely in rich golden sunset light, eyes filled with gentle understanding.",
+      "seed": 110,
+      "motion": {
+        "prompt": "Aya Anbesa smiles warmly, camera slowly pushes in",
+        "fallback": "push_in",
+        "use_video": true
+      },
+      "narration": {
+        "text": "ንጉስ ኣያ ኣንበሳ ፍሽኽ ኢሉ በሎ፦ «እቲ ሳዕሪ ቀጠልያ ምዃኑስ ኣጸቢቐ እፈልጥ እየ። መቕጻዕትኻ ግን ብዛዕባ ሕብሪ ሳዕሪ ኣይኮነን።»",
+        "english": "The king smiled: 'I know very well the grass is green. Your punishment is not about its colour.'"
+      },
+      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+    },
+    {
+      "id": "S11",
+      "beat": "lesson",
+      "shot_size": "medium",
+      "duration_s": 8,
+      "seed": 111,
+      "reason": "The moral, spoken by the lion to the leopard face to face, so the lesson is addressed to someone.",
+      "characters": [
+        "aya_anbesa",
+        "nebri"
+      ],
+      "image_prompt": "Aya Anbesa leaning gently toward Nebri the leopard, who sits before him with ears lowered, on the lion's rock in warm golden late-afternoon light, green grass around them",
+      "motion": {
+        "prompt": "the lion lowers his head toward the leopard, the leopard's ears flatten slowly, camera fixed",
+        "fallback": "push_in",
+        "use_video": true,
+        "seed": 111
+      },
+      "narration": {
+        "text": "«ንስኻ ብልሒን ዓቕምን ዘለካ እንስሳ ክነስኻ፣ ምስ ሓደ ዓሻን ዘይርዳእን ኣድጊ ግዜኻ ኣጥፊእካ ክትካታዕ ስለዝወሰንካ እዩ!»",
+        "english": "'It is because you, so wise and able, chose to waste your time arguing with a stubborn fool.'"
+      },
+      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+    },
+    {
+      "id": "S12",
+      "beat": "resolution",
+      "shot_size": "wide",
+      "duration_s": 8,
+      "seed": 112,
+      "reason": "Resolution: the leopard understands and apologises, closing the circle back in the peaceful forest.",
+      "characters": [
+        "nebri",
+        "aya_anbesa"
+      ],
+      "image_prompt": "Nebri the leopard bowing his head respectfully before Aya Anbesa on the rock, then the wide peaceful green meadow and acacia trees at golden hour",
+      "motion": {
+        "prompt": "the leopard bows slowly, grass sways in the breeze, camera pulls back gently",
+        "fallback": "pull_out",
+        "use_video": true,
+        "seed": 112
+      },
+      "narration": {
+        "text": "ነብሪ ነቲ ጥበብ ንጉሱ ተረዲኡ፣ ይቕረታ ሓቲቱ ከደ።",
+        "english": "The leopard understood his king's wisdom, asked forgiveness, and went on his way."
+      },
+      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
     }
   ],
   "end_card": {
-    "lines": ["Slowly, Slowly", "Made with AI: Gemini TTS, FLUX.2 klein, Wan 2.2, ACE-Step 1.5", "Characters are fictional. Story told with my family's permission."],
-    "duration_s": 3
+    "lines": [
+      "ንጉስ ኣራዊት ኣያ ኣንበሳ",
+      "A traditional Tigrinya fable",
+      "Made with AI: Gemini TTS, FLUX.2 klein, Wan 2.2, ACE-Step 1.5",
+      "All characters are fictional animals"
+    ],
+    "duration_s": 4
   },
-  "render": { "fps": 24, "draft": false, "voice_lufs": -16, "target_lufs": -14, "true_peak_db": -1,
-              "duck": { "threshold": 0.02, "ratio": 6, "attack_ms": 300, "release_ms": 1500 } }
+  "render": {
+    "fps": 24,
+    "draft": false,
+    "voice_lufs": -16,
+    "target_lufs": -14,
+    "true_peak_db": -1,
+    "duck": {
+      "threshold": 0.02,
+      "ratio": 6,
+      "attack_ms": 300,
+      "release_ms": 1500
+    }
+  }
 }

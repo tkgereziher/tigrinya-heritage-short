@@ -1,0 +1,9 @@
+[narration ] S01 cached  8.6s
+[narration ] S02 cached  11.6s
+[narration ] S03 cached  8.6s
+[narration ] S04 cached  9.1s
+[narration ] S05 cached  11.0s
+[narration ] attempt 1 failed (HTTP 429 (retry in 632s): {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more ); retrying in 633s

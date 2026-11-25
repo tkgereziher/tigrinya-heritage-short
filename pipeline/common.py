@@ -191,13 +191,18 @@ class Fatal(Exception):
     """An error that retrying will not fix (bad request, auth, unsupported language)."""
 
 
+class Quota(Exception):
+    """HTTP 429: this model's per-minute/per-day cap is hit. Retrying the same model wastes
+    time; callers with a model chain switch to the next model instead."""
+
+
 def retry(fn: Callable[[], Any], *, tries: int = 4, base: float = 2.0, stage: str = "") -> Any:
     """Exponential backoff with jitter. Quota (429) and 5xx errors are retried;
     `Fatal` errors are raised immediately."""
     for attempt in range(1, tries + 1):
         try:
             return fn()
-        except Fatal:
+        except (Fatal, Quota):
             raise
         except Exception as e:  # noqa: BLE001
             if attempt == tries:
@@ -211,10 +216,18 @@ def retry(fn: Callable[[], Any], *, tries: int = 4, base: float = 2.0, stage: st
             time.sleep(wait)
 
 
-def http_check(resp, stage: str) -> None:
-    """Raise Fatal for client errors that won't improve with a retry."""
+def http_check(resp, stage: str, quota_fast: bool = False) -> None:
+    """Raise Fatal for client errors that won't improve with a retry. With quota_fast,
+    a 429 raises Quota so the caller can switch models instead of waiting."""
+    hint = ""
+    if resp.status_code == 429:
+        # Google puts the wait in error.details[].retryDelay ("37s"); surface it for retry().
+        m = re.search(r'"retryDelay"\s*:\s*"([0-9.]+)s"', resp.text)
+        hint = f" (retry in {m.group(1)}s)" if m else " (retry in 60s)"
+    if resp.status_code == 429 and quota_fast:
+        raise Quota(f"HTTP 429{hint}: {resp.text[:300]}")
     if resp.status_code == 429 or resp.status_code >= 500:
-        raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:300]}")
+        raise RuntimeError(f"HTTP {resp.status_code}{hint}: {resp.text[:300]}")
     if resp.status_code >= 400:
         raise Fatal(f"HTTP {resp.status_code}: {resp.text[:500]}")
 
@@ -223,6 +236,10 @@ def http_check(resp, stage: str) -> None:
 
 def ffmpeg_bin(name: str = "ffmpeg") -> str:
     exe = shutil.which(name)
+    if not exe and os.environ.get("LOCALAPPDATA"):
+        # winget installs here; a terminal opened before the install won't have it on PATH yet.
+        cand = Path(os.environ["LOCALAPPDATA"]) / "Microsoft" / "WinGet" / "Links" / f"{name}.exe"
+        exe = str(cand) if cand.exists() else None
     if not exe:
         sys.exit(f"{name} not found on PATH. Install it (Windows: winget install Gyan.FFmpeg) and reopen the terminal.")
     return exe

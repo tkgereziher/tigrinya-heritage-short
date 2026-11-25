@@ -20,9 +20,11 @@ def run(sb: dict) -> None:
     timeline.subtitles(edl, D_RADIO / "subs.srt")
     shutil.copy(audio, D_RADIO / "radio_cut.wav")
     style = "FontName=Arial,FontSize=20,Outline=2,Shadow=0,MarginV=40"
+    has_subs = (D_RADIO / "subs.srt").read_text(encoding="utf-8").strip() != ""
+    vf = f"subtitles=subs.srt:force_style='{style}'" if has_subs else "null"
     run_ff(["-f", "lavfi", "-i", f"color=c=black:s=1280x720:r=24:d={total:.3f}",
             "-i", "radio_cut.wav",
-            "-vf", f"subtitles=subs.srt:force_style='{style}'",
+            "-vf", vf,
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
             "-shortest", "radio_cut.mp4"], cwd=D_RADIO)
     say(STAGE, f"wrote outputs/radio/radio_cut.mp4 ({total:.1f}s)")

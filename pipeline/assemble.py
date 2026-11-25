@@ -108,8 +108,9 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False, ratios: li
         ass_subs(edl, work / "subs.ass", w, hgt)
         shutil.copy(audio, work / "soundtrack.wav")
         out = f"film_{ratio}.mp4"
+        subs = "ass=subs.ass," if "Dialogue:" in (work / "subs.ass").read_text(encoding="utf-8") else ""
         run_ff(["-i", "picture.mp4", "-i", "soundtrack.wav",
-                "-vf", f"fade=t=in:d=0.8,ass=subs.ass,fps={fps},format=yuv420p",
+                "-vf", f"fade=t=in:d=0.8,{subs}fps={fps},format=yuv420p",
                 "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
                 "-r", str(fps), "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
                 "-movflags", "+faststart", "-t", f"{total:.3f}", out], cwd=work)

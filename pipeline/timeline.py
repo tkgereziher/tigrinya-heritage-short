@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import textwrap
+import wave
 from pathlib import Path
 
 from .common import D_NARR
@@ -24,6 +25,11 @@ def build(sb: dict) -> list[dict]:
     edl = []
     for s in sb["shots"]:
         narr = float(timing.get(s["id"], 0.0))
+        wav = D_NARR / f"{s['id']}.wav"
+        if not narr and wav.exists() and s["narration"]["text"].strip():
+            # timing.json is a convenience; the WAV on disk is the truth.
+            with wave.open(str(wav), "rb") as w:
+                narr = w.getnframes() / w.getframerate()
         off = s["narration"].get("offset_s", DEFAULT_OFFSET) if narr else 0.0
         dur = max(float(s["duration_s"]), off + narr + TAIL_S if narr else 0.0)
         edl.append({"id": s["id"], "start": round(t, 3), "dur": round(dur, 3),

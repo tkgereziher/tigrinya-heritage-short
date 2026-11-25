@@ -12,7 +12,7 @@ import time
 
 import requests
 
-from .common import ROOT, SCHEMA, Fatal, http_check, load_env, log_call, need, retry, say
+from .common import ROOT, SCHEMA, Fatal, Quota, http_check, load_env, log_call, need, retry, say
 
 STAGE = "script"
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -38,18 +38,19 @@ def ask(prompt: str, model: str, json_out: bool = True, temperature: float = 0.7
                       headers={"x-goog-api-key": key, "Content-Type": "application/json"},
                       json={"contents": [{"role": "user", "parts": [{"text": prompt}]}],
                             "generationConfig": {"temperature": temperature}})
-    http_check(r, STAGE)
+    http_check(r, STAGE, quota_fast=True)
     data = r.json()
     try:
-        text = "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
+        text ="".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
     except (KeyError, IndexError):
         raise Fatal(f"No text in response: {json.dumps(data)[:400]}")
     return (strip_fences(text) if json_out else text), data.get("usageMetadata", {})
 
 
 def model_chain() -> list[str]:
-    """Primary model, then fallbacks for when it is overloaded (503s seen on 2026-11-25, FAILURES.md F5)."""
-    fb = os.environ.get("GEMINI_TEXT_FALLBACKS", "gemini-3.5-flash,gemini-2.5-flash")
+    """Primary model, then fallbacks. Each Gemini model has its own per-minute/per-day limits,
+    so rotating models on 429 (quota) or 503 (overload, FAILURES.md F5) keeps the stage moving."""
+    fb = os.environ.get("GEMINI_TEXT_FALLBACKS", "gemini-3.6-flash,gemini-3.5-flash-lite,gemini-3.5-flash")
     return [text_model()] + [m.strip() for m in fb.split(",") if m.strip() and m.strip() != text_model()]
 
 
@@ -65,7 +66,8 @@ def call(prompt: str, purpose: str, json_out: bool = True) -> str:
                      latency_s=time.time() - t0, error=str(e)[:500])
             if isinstance(e, Fatal) or i == len(chain) - 1:
                 raise
-            say(STAGE, f"{model} unavailable; falling back to {chain[i + 1]}")
+            why = "quota hit" if isinstance(e, Quota) else "unavailable"
+            say(STAGE, f"{model} {why}; switching to {chain[i + 1]}")
             continue
         log_call(stage=STAGE, provider="gemini", model=model, ok=True,
                  params={"purpose": purpose, "prompt_chars": len(prompt)}, latency_s=time.time() - t0,
@@ -90,6 +92,9 @@ Rules:
 - image_prompt: subject, action, setting, composition, light. Do NOT repeat the style block
   or character descriptions; code appends those. No text or signs inside images.
 - motion.prompt: ONLY motion and camera (e.g. "she slowly turns her head, camera pushes in gently").
+- If the brief gives an original text, the narration must reuse its wording and dialogue, condensed.
+  Do not invent new plot. Keep its key lines (the quarrel, the verdict, the lesson) word-for-word.
+- Use the character ids, title, audience and intent given in the brief. Set title_native in native script.
 - Every shot has a one-sentence `reason` stating why it exists.
 - Fictional or stylised characters only unless the brief records consent.
 - Give each shot a different integer seed. Score: instrumental, gentle texture, no lead melody
