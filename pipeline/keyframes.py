@@ -11,6 +11,7 @@ from __future__ import annotations
 import base64
 import io
 import os
+import shutil
 import time
 from pathlib import Path
 
@@ -184,6 +185,14 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False, explore: i
         digest = h(model, prompt, seed, *refs)
         if not force and cache.fresh(f"{STAGE}/{sid}", digest, out):
             say(STAGE, f"{sid} cached")
+            continue
+        # Workers AI FLUX is not deterministic per seed (EXPERIMENTS.md E7): re-rolling a seed chosen
+        # from --explore gives a different picture. So promote the exact variant file if we have it.
+        var = D_KEY / "variants" / f"{sid}_{seed}.png"
+        if not force and cache.fresh(f"{STAGE}/variants/{sid}_{seed}", digest, var):
+            shutil.copy(var, out)
+            cache.put(f"{STAGE}/{sid}", digest)
+            say(STAGE, f"{sid} promoted from variant seed {seed}")
             continue
         _call(f"{STAGE}/{sid}", prompt, seed, model, out, sid, refs)
         cache.put(f"{STAGE}/{sid}", digest)

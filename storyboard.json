@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "title": "King of the Beasts, Aya Anbesa (Is the grass green or blue?)",
   "title_native": "ንጉስ ኣራዊት ኣያ ኣንበሳ (እቲ ሳዕሪ ቀጠልያ ድዩ ሰማያዊ?)",
   "logline": "When a stubborn donkey and a clever leopard quarrel over whether the grass is blue or green, King Aya Anbesa delivers a surprising verdict that teaches a timeless lesson about wasting wisdom on fools.",
@@ -11,7 +11,7 @@
     "fallback_code": "am"
   },
   "style": {
-    "block": "Warm hand-painted storybook illustration, gouache texture, soft grain, rich vibrant greens and warm ochres, golden ambient daylight, fairytale aesthetic.",
+    "block": "Warm hand-painted storybook illustration, gouache texture, soft grain, golden ambient daylight, fairytale aesthetic; lush green grass and foliage in the landscape, while every animal keeps its natural coat colours",
     "negative": "photorealistic, 3D render, text, signage, watermark, modern objects, dark gritty tone, neon lighting"
   },
   "characters": [
@@ -20,27 +20,27 @@
       "name": "Aya Anbesa",
       "description": "an old, calm, dignified lion with a thick dark-golden mane, a few grey hairs on the muzzle, kind amber eyes, and a simple woven gold band on his head.",
       "real_person": false,
-      "reference_seed": 701
+      "reference_seed": 1003
     },
     {
       "id": "adgi",
       "name": "Adgi",
       "description": "a stubborn grey donkey with a white muzzle and belly, long dark-tipped ears, a short bristly mane, and a small red tassel on his halter.",
       "real_person": false,
-      "reference_seed": 702
+      "reference_seed": 1002
     },
     {
       "id": "nebri",
       "name": "Nebri",
       "description": "a slender, clever leopard with a golden coat and black rosettes, bright green eyes, and a long curved tail.",
       "real_person": false,
-      "reference_seed": 703
+      "reference_seed": 1003
     }
   ],
   "narration": {
     "voice": "Kore",
-    "style_prompt": "Read warmly, unhurriedly, and expressively in the style of a grandparent telling a fable to children, with gentle humor during the argument and deep calm for the verdict.",
-    "words_per_second": 2.1
+    "style_prompt": "Tell this like a lively, warm storyteller entertaining children: a natural brisk pace, expressive voices for the animals, no long pauses.",
+    "words_per_second": 1.7
   },
   "music": {
     "chosen": null,
@@ -68,7 +68,7 @@
       "id": "S01",
       "beat": "Introduction to the kingdom",
       "reason": "Establishes the tranquil highland forest setting and classic fable atmosphere.",
-      "duration_s": 7.0,
+      "duration_s": 5,
       "shot_size": "wide",
       "characters": [],
       "image_prompt": "A serene highland forest meadow in full daylight, tall green grass blowing in a soft breeze beneath sweeping acacia trees under bright sunny skies.",
@@ -79,15 +79,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ነበረያ ነበረ! ኣብ ሓደ ዓቢ ጫካ፣ ኩሎም እንስሳታት ብሰላም ዝነብሩሉ ቦታ ነበረ።",
-        "english": "Long ago, in a great forest, all animals lived together in peace."
-      }
+        "text": "ነበረያ ነበረ! ኣብ ጫካ እንስሳታት ብሰላም ይነብሩ ነበሩ።",
+        "english": "Once upon a time, animals lived in peace in a forest."
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S02",
       "beat": "King Aya Anbesa on his rock",
       "reason": "Introduces the respected and fair ruler of the forest kingdom.",
-      "duration_s": 7.0,
+      "duration_s": 5,
       "shot_size": "medium",
       "characters": [
         "aya_anbesa"
@@ -100,21 +101,22 @@
         "use_video": true
       },
       "narration": {
-        "text": "መራሒኦምን ንጉሶምን ድማ ኣያ ኣንበሳ ነበረ። ብፍትሓውነቱ ኣብ ቅድሚ ኩሎም ዓቢ ክብሪ ነበሮ።",
-        "english": "Their ruler was King Aya Anbesa, respected by all for his justice."
-      }
+        "text": "መራሒኦምን ንጉሶምን ኣያ ኣንበሳ ነበረ።",
+        "english": "Their leader and king was Aya Anbesa."
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S03",
       "beat": "Adgi and Nebri meeting",
       "reason": "Sets up the encounter between the donkey and the leopard in the meadow.",
-      "duration_s": 7.0,
+      "duration_s": 5,
       "shot_size": "wide",
       "characters": [
         "adgi",
         "nebri"
       ],
-      "image_prompt": "Adgi the donkey and Nebri the leopard standing together in the open meadow, surrounded by deep green grass beneath clear blue daylight.",
+      "image_prompt": "One single illustrated scene, not a character sheet. On the left, Adgi the grey donkey; on the right, Nebri the spotted leopard; the two different animals stand facing each other in a wide open meadow of bright green grass, chatting",
       "seed": 103,
       "motion": {
         "prompt": "camera gently pans left as the two animals face each other",
@@ -122,15 +124,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ሓደ መዓልቲ፣ ኣድጊን ነብርን ኣብ ሓደ ሜዳ ተራኺቦም ከዕልሉ ጀመሩ።",
-        "english": "One day, the donkey and the leopard met chatting in a green meadow."
-      }
+        "text": "ሓደ መዓልቲ፣ ኣድጊን ነብርን ከዕልሉ ጀመሩ።",
+        "english": "One day, the donkey and the leopard began chatting."
+      },
+      "changed_by": "E6: v1 keyframe drew two donkeys and no leopard"
     },
     {
       "id": "S04",
       "beat": "Adgi claims the grass is blue",
       "reason": "Captures the absurdity of the donkey claiming the green grass is blue.",
-      "duration_s": 7.5,
+      "duration_s": 5,
       "shot_size": "medium_close_up",
       "characters": [
         "adgi"
@@ -143,15 +146,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ኣድጊ ነቲ ኣብ እግሮም ዘሎ ሳዕሪ እናረኣየ፣ «እዚ ሳዕሪ እዚ ሰማያዊ እዩ» በለ።",
-        "english": "Looking at the grass at their feet, the donkey said, 'This grass is blue.'"
-      }
+        "text": "ኣድጊ ነቲ ሳዕሪ እናረኣየ፣ «እዚ ሳዕሪ ሰማያዊ እዩ» በለ።",
+        "english": "Looking at the grass, the donkey said, 'This grass is blue.'"
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S05",
       "beat": "Nebri corrects the donkey",
       "reason": "Shows Nebri's disbelief and assertion that the grass is green.",
-      "duration_s": 7.5,
+      "duration_s": 5,
       "shot_size": "medium_close_up",
       "characters": [
         "nebri"
@@ -164,16 +168,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ነብሪ ተገሪሙ፣ «ኣይፋልካን፣ እዚ ሳዕሪ እዚ ቀጠልያ እዩ፣ ዓይንኻ ድዩ ተበላሽዩ?» ኢሉ መለሰሉ።",
-        "english": "Astonished, the leopard replied: 'No! This grass is green. Are your eyes broken?'"
+        "text": "ነብሪ «ኣይፋልካን፣ ቀጠልያ እዩ፣ ዓይንኻ ድዩ ተበላሽዩ?» ኢሉ መለሰ።",
+        "english": "The leopard replied, 'No, it is green! Are your eyes broken?'"
       },
-      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S06",
       "beat": "Journey to the king",
       "reason": "Shows the escalated quarrel leading them to seek royal arbitration.",
-      "duration_s": 7.5,
+      "duration_s": 5,
       "shot_size": "wide",
       "characters": [
         "adgi",
@@ -187,15 +191,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ክርክሮም ናብ ባእሲ ተቐየረ። «ንዑ ናብ ንጉስና ኣያ ኣንበሳ ንኺድ» ተባሃሂሎም ከዱ።",
-        "english": "Their quarrel grew fierce. 'Let us go to King Aya Anbesa for judgment!'"
-      }
+        "text": "«ንዑ ናብ ንጉስና ኣያ ኣንበሳ ንኺድ» ተባሃሂሎም ከዱ።",
+        "english": "'Let us go to our king, Aya Anbesa,' they said, and went."
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S07",
       "beat": "Presenting the dispute",
       "reason": "Brings the conflict before the calm and listening King Lion.",
-      "duration_s": 8.0,
+      "duration_s": 5,
       "shot_size": "medium",
       "characters": [
         "aya_anbesa",
@@ -210,15 +215,16 @@
         "use_video": true
       },
       "narration": {
-        "text": "ኣድጊ ቀዲሙ፣ «ኦ ንጉስና! እዚ ሳዕሪ ሰማያዊ ምዃኑ እናነገርክዎ ይካትዓኒ ኣሎ» በሎ።",
-        "english": "The donkey spoke first: 'O King! He disputes that the grass is blue.'"
-      }
+        "text": "ኣድጊ «ኦ ንጉስ፣ እዚ ሳዕሪ ሰማያዊ ምዃኑ ይካትዓኒ ኣሎ» በሎ።",
+        "english": "Donkey said, 'O King, he disputes that this grass is blue.'"
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S08",
       "beat": "The Lion's surprising ruling",
       "reason": "Delivers the key dramatic turning point where the King agrees with the donkey.",
-      "duration_s": 7.5,
+      "duration_s": 5,
       "shot_size": "close_up",
       "characters": [
         "aya_anbesa"
@@ -231,60 +237,60 @@
         "use_video": true
       },
       "narration": {
-        "text": "ኣያ ኣንበሳ ንኽልቲኦም ጽን ኢሉ ምስ ሰምዐ፣ ብህድኣት «እወ፣ እቲ ሳዕሪ ሰማያዊ እዩ» ኢሉ ፈረደ።",
-        "english": "Aya Anbesa listened and calmly ruled: 'Yes, the grass is blue.'"
-      }
+        "text": "ኣያ ኣንበሳ «እወ፣ እቲ ሳዕሪ ሰማያዊ እዩ» ኢሉ ፈረደ።",
+        "english": "Aya Anbesa calmly ruled, 'Yes, the grass is blue.'"
+      },
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S09",
       "beat": "Donkey leaves, Leopard questions",
       "reason": "Highlights the donkey's joyful exit and the leopard's hurt confusion.",
-      "duration_s": 8.0,
+      "duration_s": 5,
       "shot_size": "medium",
       "characters": [
-        "adgi",
-        "nebri",
-        "aya_anbesa"
+        "nebri"
       ],
-      "image_prompt": "Adgi trotting away happily in the background, while in the foreground Nebri bows close to Aya Anbesa with a puzzled look.",
-      "seed": 109,
+      "image_prompt": "One single illustrated scene, not a character sheet. Nebri the spotted leopard sits alone in the foreground of a green meadow with ears lowered, looking hurt and puzzled, gazing toward the horizon where a tiny grey donkey, very small and far away, trots off happily",
+      "seed": 111,
       "motion": {
-        "prompt": "camera pulls back as Adgi leaves and Nebri turns toward the lion",
+        "prompt": "the donkey trots away into the distance, the leopard's ears droop, camera fixed",
         "fallback": "pull_out",
         "use_video": true
       },
       "narration": {
-        "text": "ኣድጊ እናሰሓቐ ከደ። ነብሪ ግን ሓዚኑ «ኦ ንጉስ፣ ስለምንታይ እዩ ሰማያዊ እዩ ኢልካ ፈሪድካ?» ኢሉ ሓተቶ።",
-        "english": "The donkey left laughing. Hurt, the leopard asked, 'Why say it is blue?'"
-      }
+        "text": "ነብሪ ሓዚኑ «ኦ ንጉስ፣ ስለምንታይ ሰማያዊ እዩ ኢልካ ፈሪድካ?» ሓተቶ።",
+        "english": "Saddened, the leopard asked, 'O King, why did you rule it is blue?'"
+      },
+      "changed_by": "E6: v1 merged lion+leopard; v2 (refs for donkey+leopard) put the donkey large in front. v3 passes only the leopard reference and describes the distant donkey in text; seeds 109/110 drew a second tail, 111 is clean (outputs/keyframes/variants/S09_sheet.png)"
     },
     {
       "id": "S10",
       "beat": "The moral lesson revealed",
       "reason": "The twist: the king admits he knows the grass is green, so the verdict was never about the grass.",
-      "duration_s": 8.5,
+      "duration_s": 5,
       "shot_size": "close_up",
       "characters": [
         "aya_anbesa"
       ],
-      "image_prompt": "Aya Anbesa smiling warmly and wisely in rich golden sunset light, eyes filled with gentle understanding.",
+      "image_prompt": "One single illustrated scene, not a character sheet. Close portrait of Aya Anbesa the lion, a real lion's face with a calm, knowing, gentle expression, mouth closed, golden late-afternoon light, green grass softly blurred behind",
       "seed": 110,
       "motion": {
-        "prompt": "Aya Anbesa smiles warmly, camera slowly pushes in",
+        "prompt": "the lion blinks slowly and tilts his head slightly, very slow push in",
         "fallback": "push_in",
         "use_video": true
       },
       "narration": {
-        "text": "ንጉስ ኣያ ኣንበሳ ፍሽኽ ኢሉ በሎ፦ «እቲ ሳዕሪ ቀጠልያ ምዃኑስ ኣጸቢቐ እፈልጥ እየ። መቕጻዕትኻ ግን ብዛዕባ ሕብሪ ሳዕሪ ኣይኮነን።»",
-        "english": "The king smiled: 'I know very well the grass is green. Your punishment is not about its colour.'"
+        "text": "ንጉስ፦ «እቲ ሳዕሪ ቀጠልያ ምዃኑስ ኣጸቢቐ እፈልጥ እየ። መቕጻዕትኻ ግን ብዛዕባ ሳዕሪ ኣይኮነን።»",
+        "english": "The king: 'I know very well the grass is green. Your punishment is not about the grass.'"
       },
-      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+      "changed_by": "E6: v1 keyframe gave the lion a human smiling face and copied the reference-sheet layout"
     },
     {
       "id": "S11",
       "beat": "lesson",
       "shot_size": "medium",
-      "duration_s": 8,
+      "duration_s": 5,
       "seed": 111,
       "reason": "The moral, spoken by the lion to the leopard face to face, so the lesson is addressed to someone.",
       "characters": [
@@ -299,16 +305,16 @@
         "seed": 111
       },
       "narration": {
-        "text": "«ንስኻ ብልሒን ዓቕምን ዘለካ እንስሳ ክነስኻ፣ ምስ ሓደ ዓሻን ዘይርዳእን ኣድጊ ግዜኻ ኣጥፊእካ ክትካታዕ ስለዝወሰንካ እዩ!»",
-        "english": "'It is because you, so wise and able, chose to waste your time arguing with a stubborn fool.'"
+        "text": "«ምስ ሓደ ዓሻ ኣድጊ ግዜኻ ኣጥፊእካ ክትካታዕ ስለዝወሰንካ እዩ!»",
+        "english": "'Because you chose to waste your time arguing with a foolish donkey!'"
       },
-      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     },
     {
       "id": "S12",
       "beat": "resolution",
       "shot_size": "wide",
-      "duration_s": 8,
+      "duration_s": 5,
       "seed": 112,
       "reason": "Resolution: the leopard understands and apologises, closing the circle back in the peaceful forest.",
       "characters": [
@@ -323,10 +329,10 @@
         "seed": 112
       },
       "narration": {
-        "text": "ነብሪ ነቲ ጥበብ ንጉሱ ተረዲኡ፣ ይቕረታ ሓቲቱ ከደ።",
-        "english": "The leopard understood his king's wisdom, asked forgiveness, and went on his way."
+        "text": "ነብሪ ጥበብ ንጉሱ ተረዲኡ ይቕረታ ሓቲቱ ከደ።",
+        "english": "The leopard understood his king's wisdom, asked forgiveness, and left."
       },
-      "changed_by": "human review of LLM draft (outputs/script/storyboard.draft.gemini-3.6-flash.json)"
+      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
     }
   ],
   "end_card": {

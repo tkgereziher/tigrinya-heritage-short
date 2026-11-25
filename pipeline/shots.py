@@ -53,10 +53,15 @@ def zoompan(move: str, frames: int, w: int, hgt: int, fps: int) -> str:
     return f"zoompan=z='{z}':x='{x}':y='{y}':d={frames}:s={w}x{hgt}:fps={fps}"
 
 
+RENDER_VERSION = 2  # bump when render code changes, so cached segments re-render (part of the cache key)
+Y_BIAS = 0.35       # vertical crop position: heads sit in the upper part of these keyframes (v1 centre-crop cut crowns)
+
+
 def cover(w: int, hgt: int, mult: int = 1) -> str:
-    """Scale to fill WxH (times mult) and centre-crop: works for any source aspect."""
+    """Scale to fill WxH (times mult) and crop: centred horizontally, biased upward vertically."""
     W, H = w * mult, hgt * mult
-    return f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H}"
+    return (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+            f"crop={W}:{H}:(iw-{W})/2:(ih-{H})*{Y_BIAS}")
 
 
 def render(shot: dict, dur: float, ratio: str, cfg: dict, out: Path) -> str:
@@ -110,7 +115,7 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False,
             if sid not in want and out.exists():
                 continue
             dur = edl[sid]["dur"]
-            digest = h(source_digest(shot), dur, shot["motion"], ratio, cfg["fps"], cfg["draft"])
+            digest = h(source_digest(shot), dur, shot["motion"], ratio, cfg["fps"], cfg["draft"], RENDER_VERSION)
             if not force and cache.fresh(f"{STAGE}/{ratio}/{sid}", digest, out):
                 say(STAGE, f"{ratio} {sid} cached")
                 continue

@@ -43,6 +43,10 @@ def end_card_png(sb: dict, w: int, hgt: int, path: Path) -> None:
     for line, s, lh in zip(lines, sizes, heights):
         f = _font(line, s)
         tw = d.textlength(line, font=f)
+        while tw > w * 0.9 and s > 12:  # shrink to fit: the vertical card overflowed in v1
+            s -= 2
+            f = _font(line, s)
+            tw = d.textlength(line, font=f)
         d.text(((w - tw) / 2, y), line, font=f, fill=(236, 226, 208) if s == sizes[0] else (190, 180, 165))
         y += lh + gaps
     im.save(path)

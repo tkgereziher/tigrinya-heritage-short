@@ -196,6 +196,9 @@ class Quota(Exception):
     time; callers with a model chain switch to the next model instead."""
 
 
+MAX_WAIT_S = 900  # waits longer than this are treated as "quota exhausted for the session"
+
+
 def retry(fn: Callable[[], Any], *, tries: int = 4, base: float = 2.0, stage: str = "") -> Any:
     """Exponential backoff with jitter. Quota (429) and 5xx errors are retried;
     `Fatal` errors are raised immediately."""
@@ -212,6 +215,10 @@ def retry(fn: Callable[[], Any], *, tries: int = 4, base: float = 2.0, stage: st
             m = re.search(r"retry in ([0-9.]+)s", str(e), re.I)
             if m:
                 wait = max(wait, float(m.group(1)) + 1)
+                if wait > MAX_WAIT_S:
+                    # A daily cap (FAILURES.md F9): fail fast instead of sleeping for a day.
+                    raise Quota(f"provider asks to wait {wait / 3600:.1f} h (daily quota?). "
+                                f"Switch model for this stage or rerun after the reset. {str(e)[:200]}")
             say(stage, f"attempt {attempt} failed ({str(e)[:160]}); retrying in {wait:.0f}s")
             time.sleep(wait)
 

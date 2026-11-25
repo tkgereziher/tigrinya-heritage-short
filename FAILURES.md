@@ -43,6 +43,45 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
   log line records `fallback_from` so it's visible which model actually wrote the storyboard.
 - **Lesson:** retries cover seconds-long blips; a fallback model covers a provider being overloaded for minutes.
 
+### F6. TTS quota: 429 after 5 narration lines, with retryDelay 632 s (2026-11-25)
+- **What happened:** after the 3 smoke-test probes, narration S01–S05 succeeded, then S06 returned HTTP 429
+  "You exceeded your current quota". `error.details[].retryDelay` asked for a wait of **632 s**, so this is a
+  window of roughly 10 minutes, not a per-minute cap. A probe a minute later succeeded, so it is a rolling limit.
+  My retry parsed only "retry in Ns" from the message text, which was cut off at 300 chars, so it backed off for
+  2–9 s, burned 3 attempts and crashed.
+- **Tried:** 1) rotating TTS models like the text stage. Rejected: a different TTS model is a different narrator
+  voice mid-film. 2) waiting out the window.
+- **Fixed:** `http_check` reads `retryDelay` from the JSON error and passes it to `retry`, so the stage sleeps exactly
+  as long as Google asks. Narration gets 6 tries. TTS calls are now treated as scarce: the pace experiment runs on
+  one line before regenerating all 12.
+
+### F7. My bug: a crash lost all narration timings (2026-11-25)
+- **What happened:** `timing.json` was written only at the end of the narration stage, so the 429 crash in F6 lost the
+  durations of the 5 finished lines. On a rerun, cached lines would also have counted as 0 s, and the radio
+  cut rendered with an empty subtitle file, which made libass fail ("Unable to open subs.srt").
+- **Fixed:** timing is written after every line; cached lines read their duration from the WAV header; `timeline.build`
+  falls back to the WAV when timing.json is missing; radio and assembly skip the subtitle filter if there are no subtitles.
+- **Lesson:** derived state (timing.json) should always be rebuildable from the artefacts (WAVs).
+
+### F8. Gemini text calls: read timeout and 503s, again (2026-11-25)
+- **What happened:** the narration-condensing call to `gemini-3.8-flash` hit a 300 s read timeout, then a 503.
+- **Fixed by F5's chain:** it switched to `gemini-3.6-flash`, which answered. Every text call today has
+  needed the fallback at least once (see runs.jsonl `stage: script`).
+
+### F9. TTS daily cap: retryDelay 85,729 s after 23 calls (2026-11-25)
+- **What happened:** regenerating all 12 lines in the lively style (E3b), S01–S10 succeeded and S11 got a 429 with
+  `retryDelay` **85,729 s (about 23.8 h)**. That's the daily request cap for `gemini-3.8-flash-tts` on the free tier.
+  runs.jsonl shows 23 successful TTS calls that day: smoke probes, the v1 lines, the pace experiment and the v2 lines.
+  Every experiment spends the same budget the film needs.
+- **Tried:** waiting would push the radio cut, and so user test 1, to tomorrow.
+- **Worked around:** each Gemini model has its own quota, so S11–S12 were generated with
+  `gemini-3.1-flash-tts-preview`, same voice name (Kore):
+  `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview python film.py narration --only S11,S12`.
+  The model is part of each line's cache key, so after the reset a normal `python film.py narration` regenerates
+  exactly S11 and S12 with 3.8 and leaves S01–S10 cached. That restores one consistent narrator.
+- **Lesson:** budget TTS calls like money: probe on one line, then batch. And never let a 24 h `retryDelay` turn into a
+  24 h sleep: `retry` now raises `Quota` at once when the requested wait is over 15 min (`MAX_WAIT_S`).
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call

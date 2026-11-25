@@ -4,16 +4,24 @@
 > Graders check that the audience was set before generation, that ≥3 people saw each cut, and that
 > the storyboard visibly changed (bump `version`, set `changed_by` on the shots you changed).
 
-## 1. Brief (written <date, before any generation>)
-- **Audience:** who, age, where they watch (phone, vertical?), what they already know
-- **Intent:** the one thing they should feel or understand when it ends
-- **Define:** "How might we help ___ feel/understand ___?"
-- **Constraints:** 60–90 s, Tigrinya narration + English subtitles, free tier only, fictional/stylised characters
+## 1. Brief (written 2026-11-25, before any keyframe was generated; full brief in story/brief.md)
+- **Story:** ንጉስ ኣራዊት ኣያ ኣንበሳ (Is the grass green or blue?), a traditional Tigrinya animal fable told in my family.
+- **Audience:** Tigrinya-speaking families, especially diaspora parents watching with children aged 6–12, and
+  young adults who grew up with these tales. They watch on a phone, vertical, shared on WhatsApp, TikTok and Facebook.
+  Many of the children understand some spoken Tigrinya but read English, so the subtitles are English.
+- **Intent:** they laugh at the lion's surprising verdict, then get the twist: *don't waste your wisdom and
+  time arguing with someone who refuses to see*. Parents want to retell it at home.
+- **Define:** How might we help diaspora children hear a Tigrinya fable in Tigrinya, follow it, and remember its lesson?
+- **Constraints:** 60–90 s; Tigrinya narration plus English subtitles; free tier only; fictional animal characters,
+  so no likeness consent is needed; **the grass must be visibly green in every shot**, since the joke depends on it.
 
 ## 2. Ideate: options considered
 | Option | Why yes | Why not | Chosen? |
 |---|---|---|---|
-| | | | |
+| A family member's life story | Very personal | Needs likeness/voice consent; harder consistency with real faces | No |
+| This animal fable | Strong twist, a clear lesson, three distinct non-human characters, no consent risk | Three characters to keep consistent | **Yes** |
+| Full original text, 8 shots | Keeps every word | Measured TTS pace (E3) makes it ~130 s | No |
+| Condensed text, 12 shots | Fits 90 s, one beat per shot | Loses some wording, reviewed line by line (E4) | **Yes (v2)** |
 
 **Why every shot exists:** see `reason` on each shot in storyboard.json.
 

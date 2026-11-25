@@ -1,28 +1,62 @@
 1
-00:00:00,400 --> 00:00:09,300
-Long ago, in a great forest, all animals
-lived together in peace.
+00:00:00,400 --> 00:00:06,620
+Once upon a time, animals lived in peace
+in a forest.
 
 2
-00:00:10,000 --> 00:00:21,860
-Their ruler was King Aya Anbesa,
-respected by all for his justice.
+00:00:07,320 --> 00:00:11,380
+Their leader and king was Aya Anbesa.
 
 3
-00:00:22,560 --> 00:00:31,420
-One day, the donkey and the leopard met
-chatting in a green meadow.
+00:00:12,320 --> 00:00:16,180
+One day, the donkey and the leopard
+began chatting.
 
 4
-00:00:32,120 --> 00:00:41,500
-Looking at the grass at their feet, the
-donkey said, 'This grass is blue.'
+00:00:17,320 --> 00:00:22,980
+Looking at the grass, the donkey said,
+'This grass is blue.'
 
 5
-00:00:42,200 --> 00:00:52,356
-Astonished, the leopard replied: 'No!
-This grass is green. Are your eyes
+00:00:23,680 --> 00:00:29,580
+The leopard replied, 'No, it is green!
+Are your eyes broken?'
 
 6
-00:00:52,356 --> 00:00:53,500
-broken?'
+00:00:30,280 --> 00:00:35,540
+'Let us go to our king, Aya Anbesa,'
+they said, and went.
+
+7
+00:00:36,240 --> 00:00:42,980
+Donkey said, 'O King, he disputes that
+this grass is blue.'
+
+8
+00:00:43,680 --> 00:00:49,380
+Aya Anbesa calmly ruled, 'Yes, the grass
+is blue.'
+
+9
+00:00:50,080 --> 00:00:57,100
+Saddened, the leopard asked, 'O King,
+why did you rule it is blue?'
+
+10
+00:00:57,800 --> 00:01:06,196
+The king: 'I know very well the grass is
+green. Your punishment is not about the
+
+11
+00:01:06,196 --> 00:01:06,940
+grass.'
+
+12
+00:01:07,640 --> 00:01:13,300
+'Because you chose to waste your time
+arguing with a foolish donkey!'
+
+13
+00:01:14,000 --> 00:01:19,100
+The leopard understood his king's
+wisdom, asked forgiveness, and left.
