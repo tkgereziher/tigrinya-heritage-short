@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+storyboard.draft.json
+# Intermediate render scratch (re-creatable); final outputs and generated media stay in the repo
+outputs/**/work/
+outputs/music/candidates/_tmp/

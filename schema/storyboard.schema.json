@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/heritage-short/storyboard.schema.json",
+  "title": "Heritage Short storyboard",
+  "description": "The contract between every pipeline stage. Each stage reads this file and writes only its own outputs.",
+  "type": "object",
+  "required": ["version", "title", "logline", "audience", "intent", "language", "style", "characters", "narration", "music", "shots", "end_card"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "integer", "minimum": 1, "description": "Bump when the storyboard changes because of a user test." },
+    "title": { "type": "string", "minLength": 1 },
+    "title_native": { "type": "string", "description": "Title in the narration language (Ge'ez script for Tigrinya)." },
+    "logline": { "type": "string", "minLength": 10 },
+    "audience": { "type": "string", "minLength": 10, "description": "Who watches, and where." },
+    "intent": { "type": "string", "minLength": 10, "description": "What they should feel or understand at the end." },
+    "language": {
+      "type": "object",
+      "required": ["code", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string", "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$", "description": "BCP-47 code, e.g. ti, am, en" },
+        "name": { "type": "string" },
+        "fallback_code": { "type": "string", "description": "Language to fall back to if TTS fails for the primary one." }
+      }
+    },
+    "style": {
+      "type": "object",
+      "required": ["block"],
+      "additionalProperties": false,
+      "properties": {
+        "block": { "type": "string", "minLength": 10, "description": "Style block appended to every image prompt." },
+        "negative": { "type": "string" }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "real_person"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "name": { "type": "string" },
+          "description": { "type": "string", "minLength": 10, "description": "Fixed visual description, attached verbatim to every prompt the character appears in." },
+          "real_person": { "type": "boolean", "description": "True if this depicts or voices a real, identifiable person. Requires a consent_id." },
+          "consent_id": { "type": "string", "description": "Must match an entry in ETHICS.md when real_person is true." },
+          "reference_seed": { "type": "integer" }
+        },
+        "if": { "properties": { "real_person": { "const": true } } },
+        "then": { "required": ["consent_id"] }
+      }
+    },
+    "narration": {
+      "type": "object",
+      "required": ["voice", "style_prompt"],
+      "additionalProperties": false,
+      "properties": {
+        "voice": { "type": "string", "description": "Prebuilt TTS voice name (stock voice, not a cloned one)." },
+        "style_prompt": { "type": "string", "description": "Plain-language delivery instruction, e.g. 'Read slowly and warmly, like an elder telling a story.'" },
+        "words_per_second": { "type": "number", "minimum": 0.5, "maximum": 5 }
+      }
+    },
+    "music": {
+      "type": "object",
+      "required": ["cues"],
+      "additionalProperties": false,
+      "properties": {
+        "chosen": { "type": ["string", "null"], "description": "Filename in outputs/music/candidates/ chosen as the score. Null = placeholder." },
+        "chosen_reason": { "type": "string" },
+        "music_lufs": { "type": "number", "maximum": -10, "description": "Pre-mix loudness target for the score." },
+        "cues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "caption", "duration_s"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "start_shot": { "type": "string" },
+              "caption": { "type": "string", "minLength": 10 },
+              "lyrics": { "type": "string", "description": "Use [instrumental] for a score." },
+              "duration_s": { "type": "number", "minimum": 10, "maximum": 240 },
+              "bpm": { "type": "integer", "minimum": 40, "maximum": 200 },
+              "key": { "type": "string" },
+              "seeds": { "type": "array", "items": { "type": "integer" } },
+              "purpose": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "reason", "duration_s", "shot_size", "image_prompt", "motion", "narration"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^S[0-9]{2}$" },
+          "beat": { "type": "string" },
+          "reason": { "type": "string", "minLength": 10, "description": "Why this shot exists, in one sentence." },
+          "duration_s": { "type": "number", "minimum": 3, "maximum": 15, "description": "Minimum duration; the edit extends it to fit the narration." },
+          "shot_size": { "enum": ["extreme_wide", "wide", "medium", "medium_close_up", "close_up", "extreme_close_up", "insert"] },
+          "characters": { "type": "array", "items": { "type": "string" } },
+          "image_prompt": { "type": "string", "minLength": 10, "description": "Subject and composition. Style block and character descriptions are appended in code." },
+          "seed": { "type": "integer", "minimum": 0 },
+          "motion": {
+            "type": "object",
+            "required": ["prompt", "fallback"],
+            "additionalProperties": false,
+            "properties": {
+              "prompt": { "type": "string", "description": "Motion and camera only, for image-to-video." },
+              "fallback": { "enum": ["push_in", "pull_out", "pan_left", "pan_right", "pan_up", "pan_down", "static"], "description": "Ken Burns move used when no video clip exists." },
+              "use_video": { "type": "boolean", "description": "Send this shot to Wan 2.2. False = Ken Burns only." },
+              "seed": { "type": "integer", "minimum": 0 },
+              "trim_start_s": { "type": "number", "minimum": 0 },
+              "trim_end_s": { "type": "number", "minimum": 0 }
+            }
+          },
+          "narration": {
+            "type": "object",
+            "required": ["text", "english"],
+            "additionalProperties": false,
+            "properties": {
+              "text": { "type": "string", "description": "Line in the narration language. Empty string = no narration on this shot." },
+              "english": { "type": "string", "description": "English subtitle text." },
+              "offset_s": { "type": "number", "minimum": 0, "maximum": 5, "description": "Delay from shot start before the line begins." }
+            }
+          },
+          "changed_by": { "type": "string", "description": "Which user test or experiment changed this shot, if any." }
+        }
+      }
+    },
+    "end_card": {
+      "type": "object",
+      "required": ["lines", "duration_s"],
+      "additionalProperties": false,
+      "properties": {
+        "lines": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "duration_s": { "type": "number", "minimum": 2, "maximum": 6 }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fps": { "type": "integer", "enum": [24, 25, 30] },
+        "draft": { "type": "boolean", "description": "Draft renders at half resolution for speed." },
+        "voice_lufs": { "type": "number" },
+        "target_lufs": { "type": "number" },
+        "true_peak_db": { "type": "number" },
+        "duck": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "threshold": { "type": "number" },
+            "ratio": { "type": "number" },
+            "attack_ms": { "type": "number" },
+            "release_ms": { "type": "number" }
+          }
+        }
+      }
+    }
+  }
+}

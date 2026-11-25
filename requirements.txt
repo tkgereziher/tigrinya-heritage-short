@@ -1,0 +1,4 @@
+# Local pipeline (Python 3.11+). GPU stages have their own installs in kaggle/*.py.
+requests>=2.31
+jsonschema>=4.21
+Pillow>=10.3
