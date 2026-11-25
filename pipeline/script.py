@@ -12,7 +12,7 @@ import time
 
 import requests
 
-from .common import (ROOT, SCHEMA, Fatal, http_check, load_env, log_call, need, retry, say)
+from .common import ROOT, SCHEMA, Fatal, http_check, load_env, log_call, need, retry, say
 
 STAGE = "script"
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -47,20 +47,30 @@ def ask(prompt: str, model: str, json_out: bool = True, temperature: float = 0.7
     return (strip_fences(text) if json_out else text), data.get("usageMetadata", {})
 
 
+def model_chain() -> list[str]:
+    """Primary model, then fallbacks for when it is overloaded (503s seen on 2026-11-25, FAILURES.md F5)."""
+    fb = os.environ.get("GEMINI_TEXT_FALLBACKS", "gemini-3.5-flash,gemini-2.5-flash")
+    return [text_model()] + [m.strip() for m in fb.split(",") if m.strip() and m.strip() != text_model()]
+
+
 def call(prompt: str, purpose: str, json_out: bool = True) -> str:
     load_env()
-    model = text_model()
-    t0 = time.time()
-    try:
-        text, usage = retry(lambda: ask(prompt, model, json_out), stage=STAGE)
-    except Exception as e:
-        log_call(stage=STAGE, provider="gemini", model=model, ok=False, params={"purpose": purpose},
-                 latency_s=time.time() - t0, error=str(e)[:500])
-        raise
-    log_call(stage=STAGE, provider="gemini", model=model, ok=True,
-             params={"purpose": purpose, "prompt_chars": len(prompt)}, latency_s=time.time() - t0,
-             extra={"usage": usage})
-    return text
+    chain = model_chain()
+    for i, model in enumerate(chain):
+        t0 = time.time()
+        try:
+            text, usage = retry(lambda: ask(prompt, model, json_out), stage=STAGE, tries=3)
+        except Exception as e:
+            log_call(stage=STAGE, provider="gemini", model=model, ok=False, params={"purpose": purpose},
+                     latency_s=time.time() - t0, error=str(e)[:500])
+            if isinstance(e, Fatal) or i == len(chain) - 1:
+                raise
+            say(STAGE, f"{model} unavailable; falling back to {chain[i + 1]}")
+            continue
+        log_call(stage=STAGE, provider="gemini", model=model, ok=True,
+                 params={"purpose": purpose, "prompt_chars": len(prompt)}, latency_s=time.time() - t0,
+                 extra={"usage": usage, "fallback_from": chain[0] if i else None})
+        return text
 
 
 def draft(brief_path=None) -> None:

@@ -32,6 +32,17 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
 - **Fixed by design:** the GPU stages run as standalone scripts on Kaggle (`kaggle/`), with their own installs.
   The local pipeline needs only `requests`, `jsonschema` and `Pillow`.
 
+### F5. gemini-3.8-flash returned 503 "high demand" on the first smoke test (2026-11-25)
+- **What happened:** four attempts with exponential backoff (2 s, 5 s, 8 s) all returned HTTP 503, "This model is
+  currently experiencing high demand". `gemini-flash-latest` also returned 503 a minute later. The
+  ok:false lines are in runs.jsonl. TTS (`gemini-3.8-flash-tts`) and Cloudflare were fine at the same moment.
+- **Tried:** 1) retries alone: not enough, since the overload lasted longer than the backoff window.
+  2) probed the other text models my key lists: `gemini-3.5-flash` answered in 16 s.
+- **Fixed:** `script.call` now walks a model chain (`GEMINI_TEXT_MODEL`, then `GEMINI_TEXT_FALLBACKS`,
+  default `gemini-3.5-flash,gemini-2.5-flash`). Each model gets 3 tries, a 4xx stops immediately, and the
+  log line records `fallback_from` so it's visible which model actually wrote the storyboard.
+- **Lesson:** retries cover seconds-long blips; a fallback model covers a provider being overloaded for minutes.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call
