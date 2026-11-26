@@ -129,7 +129,7 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
 - **What happened:** at 03:19 EAT I checked whether the TTS daily cap had reset by sending a one-word request. It
   returned 200, so I started the S07 pronunciation experiment, and its first call got a 429 with `retryDelay` 16,800 s
   (4.7 h). The probe had used the only free slot in the rolling window. Over the session, 3 such probes were
-  real `generateContent` calls on a budget of about 23 per day.
+  real `generateContent` calls on a budget of about 23 per day. In all, 7 TTS requests went out by hand, outside `log_call` (3 checks today, 3 model probes on day 1, 1 failed experiment call), so runs.jsonl undercounts by 7; experiment scripts now log failures too.
 - **What worked:** the F9 fail-fast. `retry` raised `Quota` after one attempt instead of sleeping 4.7 h.
 - **Fixed:** no more probes. The job is scheduled from the `retryDelay` Google returns (about 08:05 EAT) and spends its
   calls only on work: 3 pronunciation variants plus S11–S12.

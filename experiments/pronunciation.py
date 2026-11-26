@@ -39,7 +39,14 @@ if __name__ == "__main__":
             print(f"{label}: exists, skipping")
             continue
         t0 = time.time()
-        audio, _ = retry(lambda: narration.synthesise(text, voice, base + extra, model), stage="exp", tries=3)
+        try:
+            audio, _ = retry(lambda: narration.synthesise(text, voice, base + extra, model), stage="exp", tries=3)
+        except Exception as e:
+            # Failed calls count against the quota too, so they belong in runs.jsonl (F13).
+            log_call(stage="experiment", shot=SHOT, provider="gemini", model=model, ok=False,
+                     params={"experiment": "E8 pronunciation", "label": label, "text": text},
+                     latency_s=time.time() - t0, error=str(e)[:300])
+            raise
         secs = narration.write_wav(audio, out)
         log_call(stage="experiment", shot=SHOT, provider="gemini", model=model, ok=True,
                  params={"experiment": "E8 pronunciation", "label": label, "text": text, "style_extra": extra},
