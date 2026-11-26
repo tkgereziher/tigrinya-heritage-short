@@ -38,12 +38,15 @@ fresh clip show `picture=wan`.
 ## Job 2: ACE-Step 1.5 score candidates (a few minutes)
 
 New notebook (or the same one after Job 1), GPU T4, internet on:
+Kaggle's image runs Python 3.13, but ACE-Step needs 3.11–3.12 (FAILURES.md F10), so it gets its own 3.12 environment:
 ```python
-!git clone -q https://github.com/tkgereziher/tigrinya-heritage-short.git
-!git clone -q https://github.com/ACE-Step/ACE-Step-1.5.git
-!pip install -q -e ACE-Step-1.5
-!python tigrinya-heritage-short/kaggle/acestep_music.py --acestep ACE-Step-1.5 --offload
-!zip -qr /kaggle/working/music.zip tigrinya-heritage-short/outputs/music/candidates
+!git clone -q https://github.com/tkgereziher/tigrinya-heritage-short.git || (cd tigrinya-heritage-short && git pull -q)
+!git clone -q https://github.com/ACE-Step/ACE-Step-1.5.git || true
+!pip install -q uv
+!cd ACE-Step-1.5 && uv python install 3.12 && uv sync --python 3.12
+!ACE-Step-1.5/.venv/bin/python -c "import torch, acestep; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
+!ACE-Step-1.5/.venv/bin/python tigrinya-heritage-short/kaggle/acestep_music.py --acestep ACE-Step-1.5 --offload
+!cd tigrinya-heritage-short && zip -qr /kaggle/working/music.zip outputs/music/candidates
 ```
 Unzip `music.zip` into the local repo (`outputs/music/candidates/`), run `python film.py ingest`, listen to
 the 3 candidates **under the narration at low volume**, and set `music.chosen` + `music.chosen_reason` in

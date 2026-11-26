@@ -82,6 +82,19 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
 - **Lesson:** budget TTS calls like money: probe on one line, then batch. And never let a 24 h `retryDelay` turn into a
   24 h sleep: `retry` now raises `Quota` at once when the requested wait is over 15 min (`MAX_WAIT_S`).
 
+### F10. ACE-Step won't install on Kaggle: the image moved to Python 3.13 (2026-11-26)
+- **What happened:** `pip install -e ACE-Step-1.5` → `ERROR: Package 'ace-step' requires a different Python:
+  3.13.16 not in '<3.13,>=3.11'`. The script then failed with `ModuleNotFoundError: No module named 'acestep'`.
+  I had flagged the 3.11–3.12 requirement for my *local* 3.14 (F4) and assumed Kaggle's image would be in range.
+  It isn't anymore.
+- **Tried:** 1) plain `pip install`, refused as above. 2) Rejected `--ignore-requires-python`: forcing an unsupported
+  interpreter swaps a clear error now for unclear ones later.
+- **Fixed:** an isolated Python 3.12 inside the notebook, the way ACE-Step's own README installs it:
+  `pip install uv && cd ACE-Step-1.5 && uv python install 3.12 && uv sync --python 3.12`, then run the script with
+  `ACE-Step-1.5/.venv/bin/python`. Kaggle's 3.13 is untouched. (kaggle/README.md updated.)
+- **Lesson:** a hosted notebook's Python version is a moving dependency like any model ID. Check it
+  (`python --version`) as the first cell, and give each tool its own environment.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call
