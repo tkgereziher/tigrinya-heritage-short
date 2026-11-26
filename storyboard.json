@@ -217,9 +217,10 @@
       },
       "narration": {
         "text": "ኣድጊ «ኦ ንጉስ፣ እዚ ሳዕሪ ሰማያዊ ምዃኑ ይካትዓኒ ኣሎ» በሎ።",
-        "english": "Donkey said, 'O King, he disputes that this grass is blue.'"
+        "english": "Donkey said, 'O King, he disputes that this grass is blue.'",
+        "style_extra": " Pronounce every word fully and separately; say «ይካትዓኒ» and «ኣሎ» as two distinct words."
       },
-      "changed_by": "E3: measured Tigrinya TTS pace 1.3 words/s made v1 ~128 s of narration; condensed to fit 90 s"
+      "changed_by": "User test 1 (viewer 2 heard «ይካትዓኒ ኣሎ» as 'ይካዓረኒሎ'); E8: variant A chosen by a native speaker. Same words + a two-distinct-words instruction; the auditioned file was promoted, not re-rolled."
     },
     {
       "id": "S08",

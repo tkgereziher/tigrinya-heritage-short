@@ -1,42 +1,70 @@
+[film      ] storyboard valid: 12 shots
+[narration ] S01 cached  5.9s
+[narration ] S02 cached  3.3s
+[narration ] S03 cached  3.7s
+[narration ] S04 cached  5.7s
+[narration ] S05 cached  5.6s
+[narration ] S06 cached  5.0s
+[narration ] S07 cached  6.3s
+[narration ] S08 cached  4.7s
+[narration ] S09 cached  6.7s
+[narration ] S10 cached  8.8s
+[narration ] S11 cached  4.8s
+[narration ] S12 cached  3.6s
+[narration ] total narration 64.3s
+[keyframes ] S01 cached
+[keyframes ] S02 cached
+[keyframes ] S03 cached
+[keyframes ] S04 cached
+[keyframes ] S05 cached
+[keyframes ] S06 cached
+[keyframes ] S07 cached
+[keyframes ] S08 cached
+[keyframes ] S09 cached
+[keyframes ] S10 cached
+[keyframes ] S11 cached
+[keyframes ] S12 cached
+[music     ] 3 candidate(s): score_s11.wav, score_s22.wav, score_s33.wav
+[music     ] score cached (score_s11.wav)
 [assemble  ] timeline:
 S01  start   0.00s  dur  6.92s  narration  5.92s
-S02  start   6.92s  dur  5.00s  narration  3.76s
-S03  start  11.92s  dur  5.00s  narration  3.56s
-S04  start  16.92s  dur  6.36s  narration  5.36s
-S05  start  23.28s  dur  6.60s  narration  5.60s
-S06  start  29.88s  dur  5.96s  narration  4.96s
-S07  start  35.84s  dur  7.44s  narration  6.44s
-S08  start  43.28s  dur  6.40s  narration  5.40s
-S09  start  49.68s  dur  7.72s  narration  6.72s
-S10  start  57.40s  dur  9.84s  narration  8.84s
-S11  start  67.24s  dur  6.36s  narration  5.36s
-S12  start  73.60s  dur  5.80s  narration  4.80s
-TOTAL with end card: 84.4s (target 60-90s)
+S02  start   6.92s  dur  5.00s  narration  3.32s
+S03  start  11.92s  dur  5.00s  narration  3.70s
+S04  start  16.92s  dur  6.65s  narration  5.65s
+S05  start  23.57s  dur  6.63s  narration  5.63s
+S06  start  30.20s  dur  6.00s  narration  5.00s
+S07  start  36.20s  dur  7.33s  narration  6.33s
+S08  start  43.53s  dur  5.73s  narration  4.73s
+S09  start  49.26s  dur  7.72s  narration  6.72s
+S10  start  56.98s  dur  9.84s  narration  8.84s
+S11  start  66.82s  dur  5.85s  narration  4.85s
+S12  start  72.67s  dur  5.00s  narration  3.62s
+TOTAL with end card: 82.7s (target 60-90s)
 [shots     ] 16x9 S01 cached
 [shots     ] 16x9 S02 cached
 [shots     ] 16x9 S03 cached
-[shots     ] 16x9 S04 cached
-[shots     ] 16x9 S05 cached
-[shots     ] 16x9 S06 cached
-[shots     ] 16x9 S07 cached
-[shots     ] 16x9 S08 cached
+[shots     ] 16x9 S04 regenerated (kenburns, 6.65s)
+[shots     ] 16x9 S05 regenerated (kenburns, 6.63s)
+[shots     ] 16x9 S06 regenerated (kenburns, 6.00s)
+[shots     ] 16x9 S07 regenerated (kenburns, 7.33s)
+[shots     ] 16x9 S08 regenerated (kenburns, 5.73s)
 [shots     ] 16x9 S09 cached
 [shots     ] 16x9 S10 cached
-[shots     ] 16x9 S11 cached
-[shots     ] 16x9 S12 cached
+[shots     ] 16x9 S11 regenerated (kenburns, 5.85s)
+[shots     ] 16x9 S12 regenerated (kenburns, 5.00s)
 [shots     ] 9x16 S01 cached
 [shots     ] 9x16 S02 cached
 [shots     ] 9x16 S03 cached
-[shots     ] 9x16 S04 cached
-[shots     ] 9x16 S05 cached
-[shots     ] 9x16 S06 cached
-[shots     ] 9x16 S07 cached
-[shots     ] 9x16 S08 cached
+[shots     ] 9x16 S04 regenerated (kenburns, 6.65s)
+[shots     ] 9x16 S05 regenerated (kenburns, 6.63s)
+[shots     ] 9x16 S06 regenerated (kenburns, 6.00s)
+[shots     ] 9x16 S07 regenerated (kenburns, 7.33s)
+[shots     ] 9x16 S08 regenerated (kenburns, 5.73s)
 [shots     ] 9x16 S09 cached
 [shots     ] 9x16 S10 cached
-[shots     ] 9x16 S11 cached
-[shots     ] 9x16 S12 cached
-[mix       ] soundtrack 84.4s  music=score  -14.08 LUFS  TP -1.00 dB
-[assemble  ] wrote outputs/final/film_16x9.mp4  (84.4s, 1920x1080)
-[assemble  ] wrote outputs/final/film_9x16.mp4  (84.4s, 1080x1920)
-[film      ] done in 170.2s
+[shots     ] 9x16 S11 regenerated (kenburns, 5.85s)
+[shots     ] 9x16 S12 regenerated (kenburns, 5.00s)
+[mix       ] soundtrack 82.52s  music=score  -13.99 LUFS  TP -2.12 dB
+[assemble  ] wrote outputs/final/film_16x9.mp4  (82.7s, 1920x1080)
+[assemble  ] wrote outputs/final/film_9x16.mp4  (82.7s, 1080x1920)
+[film      ] done in 129.0s

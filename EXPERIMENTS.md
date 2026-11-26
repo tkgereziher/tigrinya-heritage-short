@@ -11,7 +11,7 @@ Format: **hypothesis → change (one thing, seed fixed) → result → decision*
 | E5 | done | Does a global style block stay global? | No: "greens" coloured the manes; scoped to the landscape |
 | E6 | done | How many referenced characters fit in one keyframe? | References force prominence; background characters go in text |
 | E7 | done | Is Workers AI klein deterministic per seed? | No: 29.7% of pixels differ; promote variant files |
-| E8 | running | Which fix stops the S07 mispronunciation? | 3 variants on 3.8 TTS, native listener decides |
+| E8 | done | Which fix stops the S07 mispronunciation? | A: same words + "two distinct words" instruction, chosen by a native speaker |
 | E9 | done (pending listeners) | Which ACE-Step candidate fits under the narration? | s11: its ending lands on the end card |
 | E10 | planned | Does ratio-10 ducking pump compared with ratio 6? | `render.duck.ratio` 6 vs 10, 3 listeners |
 | E11 | planned | Are Ken Burns stills nearly as watchable as Wan clips on a phone? | blind A/B, 5 people (needs Wan clips) |
@@ -99,6 +99,17 @@ the foreground, describe background characters in text, and never write "smiling
 `--explore` variant is **promoted** (its file copied in), not re-rolled (`keyframes.run`); (2) reproducibility comes
 from committing outputs plus the content-hash cache, not from seeds. Seed-fixed A/B comparisons on this provider need
 several samples per arm.
+
+## E8. Fixing a TTS mispronunciation without changing the words (2026-11-26), measured
+**Hypothesis:** the merge of «ይካትዓኒ ኣሎ» into "ይካዓረኒሎ" (user test 1, viewer 2) can be fixed by (A) a delivery
+instruction, (B) a different but equivalent construction «ይካትዓኒ እዩ ዘሎ», or (C) a synonym «ይከራኸረኒ ኣሎ».
+**Change:** one variable per variant; same model (gemini-3.8-flash-tts), voice and base style
+(`experiments/pronunciation.py` → `outputs/experiments/pron_S07_*.wav`). Lengths: A 6.3 s, B 6.0 s, C 6.0 s.
+**Result:** a native Tigrinya speaker (me) chose **A**: the original words, pronounced as two distinct words. A
+pronunciation fix didn't need a word change, only an instruction for that one line.
+**Decision:** storyboard gained a per-shot `narration.style_extra` (schema + `narration.run`; it's part of the line's
+cache key). The auditioned file was **promoted** as `outputs/narration/S07.wav` under the exact key the pipeline computes,
+not re-rolled, because generative audio, like the images in E7, needn't reproduce the take that was approved.
 
 ## E9. Which score candidate fits under the narration? (2026-11-26), measured, listener check pending
 **Hypothesis:** of 3 seeds of one caption (instrumental krar + masenqo, sparse, no lead melody, 76 bpm, A minor,

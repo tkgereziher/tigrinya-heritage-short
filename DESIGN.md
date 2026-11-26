@@ -51,7 +51,7 @@ Verbatim responses. Names withheld; relationship and channel to be filled in.
 |---|---|---|---|
 | `intent` | "they laugh at the verdict, then get the twist" | moved by the lion's wisdom, leave with the lesson | none of 4 said they laughed (2 said they did not), 1 called it touching. The story works, my *intent* was wrong, so the intent changes, not the story |
 | `end_card.lines` | title, credits | + "Don't waste your wisdom arguing with someone who refuses to see." | viewer 4 asked what the verdict meant; state the moral in plain words (text, no TTS cost) |
-| S07 narration | «… ይካትዓኒ ኣሎ» mispronounced | chosen from 3 variants (EXPERIMENTS.md E8) | viewer 2 |
+| S07 narration | «… ይካትዓኒ ኣሎ» mispronounced | same words + a "two distinct words" instruction (variant A of 3, EXPERIMENTS.md E8) | viewer 2 |
 | Kept | sync, pacing, shot order | unchanged | viewer 2: "in great sync" |
 
 ## 4. User test 2: near-final cut (storyboard vN)

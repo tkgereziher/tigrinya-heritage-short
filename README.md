@@ -1,6 +1,6 @@
 # ንጉስ ኣራዊት ኣያ ኣንበሳ: a Tigrinya fable, made by a storyboard-to-film pipeline
 
-An 84-second animated short of a Tigrinya fable (a donkey says the grass is blue, a leopard says it's green, and
+An 83-second animated short of a Tigrinya fable (a donkey says the grass is blue, a leopard says it's green, and
 the lion king's verdict has a twist). It is narrated in Tigrinya with English subtitles and an original score,
 and generated from one file, `storyboard.json`, by free hosted APIs, open weights on a free GPU, and FFmpeg.
 Change one line of the storyboard, rerun, and only that shot regenerates.
@@ -9,9 +9,9 @@ Change one line of the storyboard, rerun, and only that shot regenerates.
 
 | | |
 |---|---|
-| Length | 84.4 s (12 shots + a 5 s end card), cut to the measured voice track |
+| Length | 82.7 s (12 shots + a 5 s end card), cut to the measured voice track |
 | Exports | `outputs/final/film_9x16.mp4` (1080×1920) and `film_16x9.mp4` (1920×1080), H.264/AAC, 24 fps |
-| Sound | Tigrinya narration (Gemini 3.8 Flash TTS, voice Kore), ACE-Step score ducked under it, −14.1 LUFS / −1.0 dBTP |
+| Sound | Tigrinya narration (Gemini 3.8 Flash TTS, voice Kore), ACE-Step score ducked under it, −14.0 LUFS / −2.1 dBTP |
 | Subtitles | English, burned in, inside the vertical safe area; also `outputs/final/subtitles_en.srt` |
 | Pictures | FLUX.2 klein keyframes conditioned on character reference sheets; Ken Burns motion in FFmpeg |
 | Labelling | End card: the moral in Tigrinya and English, "Made with AI" and the models used; fictional characters |
@@ -77,11 +77,11 @@ own Python 3.12 environment made with `uv`.
 | | Measured |
 |---|---|
 | Spend | **$0** (list-price equivalent about $0.05: images $0.043, T4 time about $0.003) |
-| Model calls logged | 73 (69 ok), plus 7 TTS requests sent by hand outside the log (FAILURES.md F13) |
+| Model calls logged | 86 (80 ok), plus 7 TTS requests sent by hand outside the log (FAILURES.md F13) |
 | Narration pace | Tigrinya at **1.3 words/s**, about half the usual rule of thumb; budgeted in Ge'ez characters (E3) |
 | Hardest limit | Gemini TTS free tier: **about 23 calls/day**, with a rolling window (F6, F9, F13) |
 | Image latency | 8.9 s median per FLUX.2 klein image; 3,912 of 10,000 daily free neurons used |
-| Full render | 158–179 s for both ratios on a laptop |
+| Full render | 129–179 s for both ratios on a laptop |
 
 What broke and how it was handled: [FAILURES.md](FAILURES.md) (F1–F13). What was tested and what it changed:
 [EXPERIMENTS.md](EXPERIMENTS.md). What the audience said and what changed: [DESIGN.md](DESIGN.md).

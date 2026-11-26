@@ -135,6 +135,22 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
   calls only on work: 3 pronunciation variants plus S11–S12.
 - **Lesson:** on a quota this small, checking the quota costs quota. Trust the provider's `retryDelay`.
 
+### F14. My bug: a cache race lost narration entries and spent the last TTS calls (2026-11-26)
+- **What happened:** after promoting the chosen S07 take, `python film.py narration` **regenerated S02–S06**,
+  whose text, voice and style had not changed, then hit the daily cap (`retryDelay` 50,549 s, about 14 h) on S09.
+- **Cause:** a lost update. On day 1 the narration job ran while I ran `reference` and `keyframes` in parallel.
+  Each process loaded `outputs/cache.json` once at start and rewrote the *whole* file on every `put`, so the image
+  jobs overwrote the narration keys with their stale copy. The committed cache had no keys for S02–S10. Nothing
+  showed it until a run needed those keys. Every audio file was still there, but the cache said it was missing.
+- **Fixed:** `Cache.put` now re-reads the file, merges one key and writes atomically (`os.replace`). S09–S10's keys were
+  restored by hand *after* checking in runs.jsonl that their files came from exactly the current recipe (same model,
+  style and text length; durations equal to the millisecond). A full `python film.py narration` then printed `cached`
+  for all 12 lines.
+- **Cost:** 5 TTS calls of the day's budget, and S02–S06 are new takes of the same text (the audio differs slightly
+  from what test-1 viewers heard). Upside: all 12 lines are now on one model (3.8), so the S11–S12 stopgap is gone.
+- **Lesson:** a cache that several processes write needs read-merge-write. Running stages in parallel was safe for
+  the outputs, which go to separate folders, but not for the shared index.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call

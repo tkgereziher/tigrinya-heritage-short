@@ -358,6 +358,10 @@
                 "minimum": 0,
                 "maximum": 5,
                 "description": "Delay from shot start before the line begins."
+              },
+              "style_extra": {
+                "type": "string",
+                "description": "Extra delivery instruction for this line only, appended to narration.style_prompt."
               }
             }
           },

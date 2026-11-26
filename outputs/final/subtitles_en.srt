@@ -4,59 +4,59 @@ Once upon a time, animals lived in peace
 in a forest.
 
 2
-00:00:07,320 --> 00:00:11,380
+00:00:07,320 --> 00:00:10,940
 Their leader and king was Aya Anbesa.
 
 3
-00:00:12,320 --> 00:00:16,180
+00:00:12,320 --> 00:00:16,320
 One day, the donkey and the leopard
 began chatting.
 
 4
-00:00:17,320 --> 00:00:22,980
+00:00:17,320 --> 00:00:23,270
 Looking at the grass, the donkey said,
 'This grass is blue.'
 
 5
-00:00:23,680 --> 00:00:29,580
+00:00:23,970 --> 00:00:29,900
 The leopard replied, 'No, it is green!
 Are your eyes broken?'
 
 6
-00:00:30,280 --> 00:00:35,540
+00:00:30,600 --> 00:00:35,900
 'Let us go to our king, Aya Anbesa,'
 they said, and went.
 
 7
-00:00:36,240 --> 00:00:42,980
+00:00:36,600 --> 00:00:43,230
 Donkey said, 'O King, he disputes that
 this grass is blue.'
 
 8
-00:00:43,680 --> 00:00:49,380
+00:00:43,930 --> 00:00:48,960
 Aya Anbesa calmly ruled, 'Yes, the grass
 is blue.'
 
 9
-00:00:50,080 --> 00:00:57,100
+00:00:49,660 --> 00:00:56,680
 Saddened, the leopard asked, 'O King,
 why did you rule it is blue?'
 
 10
-00:00:57,800 --> 00:01:06,196
+00:00:57,380 --> 00:01:05,776
 The king: 'I know very well the grass is
 green. Your punishment is not about the
 
 11
-00:01:06,196 --> 00:01:06,940
+00:01:05,776 --> 00:01:06,520
 grass.'
 
 12
-00:01:07,640 --> 00:01:13,300
+00:01:07,220 --> 00:01:12,370
 'Because you chose to waste your time
 arguing with a foolish donkey!'
 
 13
-00:01:14,000 --> 00:01:19,100
+00:01:13,070 --> 00:01:16,990
 The leopard understood his king's
 wisdom, asked forgiveness, and left.

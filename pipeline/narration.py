@@ -91,7 +91,9 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False) -> dict:
             timing[sid] = 0.0
             say(STAGE, f"{sid} no narration")
             continue
-        digest = h(model, voice, style, text, sb["language"]["code"])
+        # A shot can add a line-specific delivery note (e.g. a pronunciation fix from a user test).
+        line_style = style + shot["narration"].get("style_extra", "")
+        digest = h(model, voice, line_style, text, sb["language"]["code"])
         if not force and cache.fresh(f"{STAGE}/{sid}", digest, out):
             with wave.open(str(out), "rb") as w:
                 timing[sid] = round(w.getnframes() / w.getframerate(), 3)
@@ -103,7 +105,7 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False) -> dict:
         try:
             # Free-tier TTS has a per-minute cap. We wait it out rather than switch models,
             # because a different TTS model is a different narrator voice mid-film.
-            pcm, meta = retry(lambda: synthesise(text, voice, style, model), stage=STAGE, tries=6)
+            pcm, meta = retry(lambda: synthesise(text, voice, line_style, model), stage=STAGE, tries=6)
         except Exception as e:
             log_call(stage=STAGE, shot=sid, provider="gemini", model=model, ok=False,
                      params={"voice": voice, "lang": sb["language"]["code"], "chars": len(text)},
@@ -115,7 +117,7 @@ def run(sb: dict, only: list[str] | None = None, force: bool = False) -> dict:
         cache.put(f"{STAGE}/{sid}", digest)
         log_call(stage=STAGE, shot=sid, provider="gemini", model=model, ok=True,
                  params={"voice": voice, "lang": sb["language"]["code"], "chars": len(text),
-                         "words": len(text.split()), "style": style},
+                         "words": len(text.split()), "style": line_style},
                  latency_s=lat, output=str(out.relative_to(D_NARR.parent.parent)),
                  extra={"audio_s": round(dur, 3), "usage": meta.get("usage")})
         say(STAGE, f"{sid} regenerated  {dur:.1f}s audio in {lat:.1f}s")

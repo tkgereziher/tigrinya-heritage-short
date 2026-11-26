@@ -181,8 +181,14 @@ class Cache:
         return path.exists() and self.data.get(key) == digest
 
     def put(self, key: str, digest: str) -> None:
-        self.data[key] = digest
-        CACHE_FILE.write_text(json.dumps(self.data, indent=2, sort_keys=True), encoding="utf-8")
+        # Read-merge-write, then an atomic replace. Writing self.data back whole lost other processes'
+        # entries when two stages ran at once (FAILURES.md F14): a stale copy overwrote fresh keys.
+        disk = json.loads(CACHE_FILE.read_text(encoding="utf-8")) if CACHE_FILE.exists() else {}
+        disk[key] = digest
+        self.data = disk
+        tmp = CACHE_FILE.with_suffix(f".{os.getpid()}.tmp")
+        tmp.write_text(json.dumps(disk, indent=2, sort_keys=True), encoding="utf-8")
+        os.replace(tmp, CACHE_FILE)
 
 
 # ---------------------------------------------------------------------- retries

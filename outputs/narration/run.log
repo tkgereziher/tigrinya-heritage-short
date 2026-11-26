@@ -1,22 +1,4 @@
-[narration ] S01 regenerated  5.9s audio in 4.5s
-[narration ] S02 regenerated  3.8s audio in 3.9s
-[narration ] S03 regenerated  3.6s audio in 5.7s
-[narration ] S04 regenerated  5.4s audio in 4.6s
-[narration ] S05 regenerated  5.6s audio in 4.7s
-[narration ] S06 regenerated  5.0s audio in 4.3s
-[narration ] S07 regenerated  6.4s audio in 4.7s
-[narration ] attempt 1 failed (HTTP 429 (retry in 2s): {
-  "error": {
-    "code": 429,
-    "message": "You exceeded your current quota, please check your plan and billing details. For more in); retrying in 3s
-[narration ] S08 regenerated  5.4s audio in 8.9s
-[narration ] attempt 1 failed (HTTP 429 (retry in 53s): {
-  "error": {
-    "code": 429,
-    "message": "You exceeded your current quota, please check your plan and billing details. For more i); retrying in 54s
-[narration ] S09 regenerated  6.7s audio in 59.6s
-[narration ] S10 regenerated  8.8s audio in 5.7s
-[narration ] attempt 1 failed (HTTP 429 (retry in 85728s): {
-  "error": {
-    "code": 429,
-    "message": "You exceeded your current quota, please check your plan and billing details. For mor); retrying in 85729s
+[narration ] S11 regenerated  4.8s audio in 4.2s
+[narration ] S12 regenerated  3.6s audio in 4.9s
+[narration ] total narration 65.0s
+[film      ] done in 9.2s
