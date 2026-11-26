@@ -1,0 +1,14 @@
+{
+  "music_source": "score",
+  "duck": {
+    "threshold": 0.02,
+    "ratio": 6,
+    "attack_ms": 300,
+    "release_ms": 1500
+  },
+  "voice_lufs": -16,
+  "music_lufs": -24,
+  "measured_I": "-14.08",
+  "measured_TP": "-1.00",
+  "duration_s": 84.22
+}

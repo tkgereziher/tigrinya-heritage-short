@@ -36,8 +36,9 @@ def voice_track(edl: list[dict], total_s: float, work: Path) -> Path | None:
     return raw
 
 
-def music_track(sb: dict, total_s: float, work: Path, placeholder: bool) -> tuple[Path, str]:
-    score = D_MUSIC / "score.wav"
+def music_track(sb: dict, total_s: float, work: Path, placeholder: bool,
+                score: Path | None = None) -> tuple[Path, str]:
+    score = score or D_MUSIC / "score.wav"
     fade_out = max(total_s - 3.0, 0)
     raw = work / "music_raw.wav"
     if score.exists() and not placeholder:
@@ -51,10 +52,11 @@ def music_track(sb: dict, total_s: float, work: Path, placeholder: bool) -> tupl
     return raw, src
 
 
-def soundtrack(sb: dict, edl: list[dict], total_s: float, work: Path, placeholder_music: bool = False) -> Path:
+def soundtrack(sb: dict, edl: list[dict], total_s: float, work: Path, placeholder_music: bool = False,
+               score: Path | None = None) -> Path:
     cfg = render_cfg(sb)
     work.mkdir(parents=True, exist_ok=True)
-    music_raw, src = music_track(sb, total_s, work, placeholder_music)
+    music_raw, src = music_track(sb, total_s, work, placeholder_music, score)
     music = work / "music_norm.wav"
     normalise(music_raw, music, cfg["music_lufs"])
 

@@ -1,0 +1,23 @@
+{
+  "score_s11.wav": {
+    "raw_I_LUFS": -15.3,
+    "raw_LRA_dB": 6.2,
+    "final_I": "-14.08",
+    "final_TP": "-1.00",
+    "audition": "outputs\\experiments\\audition_score_s11.mp3"
+  },
+  "score_s22.wav": {
+    "raw_I_LUFS": -17.6,
+    "raw_LRA_dB": 5.0,
+    "final_I": "-14.16",
+    "final_TP": "-1.00",
+    "audition": "outputs\\experiments\\audition_score_s22.mp3"
+  },
+  "score_s33.wav": {
+    "raw_I_LUFS": -15.4,
+    "raw_LRA_dB": 6.2,
+    "final_I": "-14.13",
+    "final_TP": "-1.00",
+    "audition": "outputs\\experiments\\audition_score_s33.mp3"
+  }
+}
