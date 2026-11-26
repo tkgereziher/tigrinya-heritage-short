@@ -39,16 +39,17 @@ def voice_track(edl: list[dict], total_s: float, work: Path) -> Path | None:
 def music_track(sb: dict, total_s: float, work: Path, placeholder: bool,
                 score: Path | None = None) -> tuple[Path, str]:
     score = score or D_MUSIC / "score.wav"
-    fade_out = max(total_s - 3.0, 0)
+    fo = float(sb.get("render", {}).get("music_fade_out_s", 3.0))  # short when the score has its own ending
+    fade_out = max(total_s - fo, 0)
     raw = work / "music_raw.wav"
     if score.exists() and not placeholder:
         src = "score"
         run_ff(["-stream_loop", "-1", "-i", str(score), "-t", f"{total_s:.3f}",
-                "-af", f"afade=t=in:d=1.5,afade=t=out:st={fade_out:.3f}:d=3", "-ar", "48000", "-ac", "2", str(raw)])
+                "-af", f"afade=t=in:d=1.5,afade=t=out:st={fade_out:.3f}:d={fo}", "-ar", "48000", "-ac", "2", str(raw)])
     else:
         src = "placeholder"
         run_ff(["-f", "lavfi", "-i", PLACEHOLDER, "-t", f"{total_s:.3f}",
-                "-af", f"afade=t=in:d=1.5,afade=t=out:st={fade_out:.3f}:d=3", str(raw)])
+                "-af", f"afade=t=in:d=1.5,afade=t=out:st={fade_out:.3f}:d={fo}", str(raw)])
     return raw, src
 
 

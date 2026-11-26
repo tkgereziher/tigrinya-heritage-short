@@ -1,22 +1,20 @@
 # Experiments
 
 Format: **hypothesis → change (one thing, seed fixed) → result → decision**, each with evidence
-(runs.jsonl timestamps, file names, listener counts). The planned experiments below are the queue.
-An entry only counts once it has a measured result.
+(runs.jsonl timestamps, file names, listener counts). An entry only counts once it has a measured result.
 
-| # | Status | Hypothesis | Change (one variable) | Evidence to collect |
-|---|---|---|---|---|
-| E1 | planned | Gemini 3.8 Flash TTS speaks Tigrinya intelligibly | Same probe line in ti / am / en (`film.py smoke`) | native-speaker rating 1–5 per file, latency from runs.jsonl |
-| E2 | planned | A style instruction improves delivery more than switching voices | Voice fixed (Kore), style_prompt on vs off; then style fixed, Kore vs Charon | 3 listeners' preference, audio_s (pace) |
-| E3 | planned | Tigrinya narration runs slower than the 2.2 words/s rule of thumb | Measure words / audio_s per line | timing.json + word counts → measured w/s |
-| E4 | planned | Passing the approved reference image (klein `input_image_0`) beats text-only description for identity consistency | Same prompts and seeds, refs on vs off, shots S02/S05/S07 | blind same/different-person judgement from 3 people |
-| E5 | planned | FLUX.2 klein follows composition prompts better than FLUX.1 schnell | `CF_IMAGE_MODEL` swap, same prompt and seed, 4 shots | prompt-adherence checklist per image, latency, neurons |
-| E6 | planned | Motion-only Wan prompts flicker less than prompts that re-describe the subject | Same keyframe and seed, two prompts | visible morph/flicker count per clip, gpu_s |
-| E7 | planned | 480p/81-frame drafts are good enough to judge a clip, at roughly a third of 720p's GPU time | 832×480 vs 1280×704, same seed | gpu_s per clip, side-by-side notes |
-| E8 | planned | fp16 on T4 produces NaN/black frames for Wan 2.2 5B | `--dtype fp16` vs `bf16` | ok/fail in runs_gpu.jsonl, gpu_s |
-| E9 | planned | A sparse caption with no lead instrument sits better under narration | 3 ACE-Step seeds × 2 captions, auditioned under the voice at low volume | listener choice and why → `music.chosen_reason` |
-| E10 | planned | Ducking at ratio 6 / release 1500 ms sounds natural; ratio 10 pumps | `render.duck.ratio` 6 vs 10 | mix_report.json LUFS, 3 listeners |
-| E11 | planned | Ken Burns stills are judged nearly as watchable as Wan clips on a phone | Blind A/B of 2 shots, 5 people | preference counts |
+| # | Status | Question | Outcome in one line |
+|---|---|---|---|
+| E3 | done | Does the 2–2.5 words/s rule hold for Tigrinya TTS? | No: 1.3 words/s; budget in Ge'ez characters (5.5/s) |
+| E3b | done | Does the style prompt change pace? | Lively is 25% faster than unhurried; film fits at 83.4 s |
+| E4 | done | Can an LLM draft and condense a fable faithfully? | Structure yes; it cut the twist and the moral's bridge |
+| E5 | done | Does a global style block stay global? | No: "greens" coloured the manes; scoped to the landscape |
+| E6 | done | How many referenced characters fit in one keyframe? | References force prominence; background characters go in text |
+| E7 | done | Is Workers AI klein deterministic per seed? | No: 29.7% of pixels differ; promote variant files |
+| E8 | running | Which fix stops the S07 mispronunciation? | 3 variants on 3.8 TTS, native listener decides |
+| E9 | done (pending listeners) | Which ACE-Step candidate fits under the narration? | s11: its ending lands on the end card |
+| E10 | planned | Does ratio-10 ducking pump compared with ratio 6? | `render.duck.ratio` 6 vs 10, 3 listeners |
+| E11 | planned | Are Ken Burns stills nearly as watchable as Wan clips on a phone? | blind A/B, 5 people (needs Wan clips) |
 
 ---
 
@@ -101,6 +99,29 @@ the foreground, describe background characters in text, and never write "smiling
 `--explore` variant is **promoted** (its file copied in), not re-rolled (`keyframes.run`); (2) reproducibility comes
 from committing outputs plus the content-hash cache, not from seeds. Seed-fixed A/B comparisons on this provider need
 several samples per arm.
+
+## E9. Which score candidate fits under the narration? (2026-11-26), measured, listener check pending
+**Hypothesis:** of 3 seeds of one caption (instrumental krar + masenqo, sparse, no lead melody, 76 bpm, A minor,
+90 s), the one with the steadiest texture fits best under the voice.
+**Change:** seed only (11, 22, 33); same caption and metadata. ACE-Step 1.5 turbo on a Kaggle T4: **32 s for all three**
+(FAILURES.md F10–F12). Each was auditioned as the full film soundtrack, with narration ducked and mastered to −14 LUFS
+(`experiments/audition_music.py` → `outputs/experiments/audition_score_s*.mp3`), and its structure read from a
+spectrogram (`outputs/experiments/music_spectrograms.png`).
+**Result:**
+
+| seed | raw loudness | loudness range (LRA) | structure |
+|---|---|---|---|
+| s11 | −15.3 LUFS | 6.2 dB | busiest high plucking (5–45 s); **ends on a sustained chord ~80–84 s, then silence** |
+| s22 | −17.6 LUFS | **5.0 dB** (steadiest) | darkest; a bright flourish at ~50 s (under S09); no ending, runs to 90 s |
+| s33 | −15.4 LUFS | 6.2 dB | flourish at ~11 s; tail ~86 s |
+
+The hypothesis predicted s22. But the brief's music guidance also asks for "a theme that returns near the end", and only
+s11 has a written ending. Its final chord starts at about 80 s, and the end card starts at **79.4 s**. Ducking handles
+the busier texture under each line.
+**Decision:** `music.chosen = score_s11.wav`. The fade-out is now a storyboard setting (`render.music_fade_out_s`):
+0.8 s instead of a hard-coded 3 s, so the fade doesn't swallow the chord. **This choice is made from measurements,
+not from listening.** It is confirmed or overturned by the listeners in user test 2 (DESIGN.md §4), and if they
+overturn it, swapping is one field in storyboard.json.
 
 <!-- Template:
 ## En. <title> (date)

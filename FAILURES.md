@@ -125,6 +125,16 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
   library's own log line did. Read the "what I actually ran with" lines, not just the exit status. And never trust a
   library's return value as success without checking the payload.
 
+### F13. My quota probes spent the quota they were checking (2026-11-26)
+- **What happened:** at 03:19 EAT I checked whether the TTS daily cap had reset by sending a one-word request. It
+  returned 200, so I started the S07 pronunciation experiment, and its first call got a 429 with `retryDelay` 16,800 s
+  (4.7 h). The probe had used the only free slot in the rolling window. Over the session, 3 such probes were
+  real `generateContent` calls on a budget of about 23 per day.
+- **What worked:** the F9 fail-fast. `retry` raised `Quota` after one attempt instead of sleeping 4.7 h.
+- **Fixed:** no more probes. The job is scheduled from the `retryDelay` Google returns (about 08:05 EAT) and spends its
+  calls only on work: 3 pronunciation variants plus S11–S12.
+- **Lesson:** on a quota this small, checking the quota costs quota. Trust the provider's `retryDelay`.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call

@@ -11,32 +11,32 @@ S09  start  49.68s  dur  7.72s  narration  6.72s
 S10  start  57.40s  dur  9.84s  narration  8.84s
 S11  start  67.24s  dur  6.36s  narration  5.36s
 S12  start  73.60s  dur  5.80s  narration  4.80s
-TOTAL with end card: 83.4s (target 60-90s)
-[shots     ] 16x9 S01 regenerated (kenburns, 6.92s)
-[shots     ] 16x9 S02 regenerated (kenburns, 5.00s)
-[shots     ] 16x9 S03 regenerated (kenburns, 5.00s)
-[shots     ] 16x9 S04 regenerated (kenburns, 6.36s)
-[shots     ] 16x9 S05 regenerated (kenburns, 6.60s)
-[shots     ] 16x9 S06 regenerated (kenburns, 5.96s)
-[shots     ] 16x9 S07 regenerated (kenburns, 7.44s)
-[shots     ] 16x9 S08 regenerated (kenburns, 6.40s)
-[shots     ] 16x9 S09 regenerated (kenburns, 7.72s)
-[shots     ] 16x9 S10 regenerated (kenburns, 9.84s)
-[shots     ] 16x9 S11 regenerated (kenburns, 6.36s)
-[shots     ] 16x9 S12 regenerated (kenburns, 5.80s)
-[shots     ] 9x16 S01 regenerated (kenburns, 6.92s)
-[shots     ] 9x16 S02 regenerated (kenburns, 5.00s)
-[shots     ] 9x16 S03 regenerated (kenburns, 5.00s)
-[shots     ] 9x16 S04 regenerated (kenburns, 6.36s)
-[shots     ] 9x16 S05 regenerated (kenburns, 6.60s)
-[shots     ] 9x16 S06 regenerated (kenburns, 5.96s)
-[shots     ] 9x16 S07 regenerated (kenburns, 7.44s)
-[shots     ] 9x16 S08 regenerated (kenburns, 6.40s)
-[shots     ] 9x16 S09 regenerated (kenburns, 7.72s)
-[shots     ] 9x16 S10 regenerated (kenburns, 9.84s)
-[shots     ] 9x16 S11 regenerated (kenburns, 6.36s)
-[shots     ] 9x16 S12 regenerated (kenburns, 5.80s)
-[mix       ] soundtrack 83.4s  music=placeholder  -14.14 LUFS  TP -1.00 dB
-[assemble  ] wrote outputs/final/film_16x9.mp4  (83.4s, 1920x1080)
-[assemble  ] wrote outputs/final/film_9x16.mp4  (83.4s, 1080x1920)
-[film      ] done in 179.4s
+TOTAL with end card: 84.4s (target 60-90s)
+[shots     ] 16x9 S01 cached
+[shots     ] 16x9 S02 cached
+[shots     ] 16x9 S03 cached
+[shots     ] 16x9 S04 cached
+[shots     ] 16x9 S05 cached
+[shots     ] 16x9 S06 cached
+[shots     ] 16x9 S07 cached
+[shots     ] 16x9 S08 cached
+[shots     ] 16x9 S09 cached
+[shots     ] 16x9 S10 cached
+[shots     ] 16x9 S11 cached
+[shots     ] 16x9 S12 cached
+[shots     ] 9x16 S01 cached
+[shots     ] 9x16 S02 cached
+[shots     ] 9x16 S03 cached
+[shots     ] 9x16 S04 cached
+[shots     ] 9x16 S05 cached
+[shots     ] 9x16 S06 cached
+[shots     ] 9x16 S07 cached
+[shots     ] 9x16 S08 cached
+[shots     ] 9x16 S09 cached
+[shots     ] 9x16 S10 cached
+[shots     ] 9x16 S11 cached
+[shots     ] 9x16 S12 cached
+[mix       ] soundtrack 84.4s  music=score  -14.08 LUFS  TP -1.00 dB
+[assemble  ] wrote outputs/final/film_16x9.mp4  (84.4s, 1920x1080)
+[assemble  ] wrote outputs/final/film_9x16.mp4  (84.4s, 1080x1920)
+[film      ] done in 170.2s

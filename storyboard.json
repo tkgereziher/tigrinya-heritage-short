@@ -43,7 +43,7 @@
     "words_per_second": 1.7
   },
   "music": {
-    "chosen": null,
+    "chosen": "score_s11.wav",
     "music_lufs": -24,
     "cues": [
       {
@@ -61,7 +61,8 @@
         ],
         "purpose": "Playful underscore that leaves room for the voice; lifts during the quarrel, drops for the verdict, returns warm for the lesson."
       }
-    ]
+    ],
+    "chosen_reason": "Chosen on measured structure (E9), pending listener confirmation in user test 2: the only candidate with a written ending; its final chord (~80-84 s) begins as the end card appears (79.4 s), so the music resolves on the moral. Risk: the busiest texture of the three; ducking lowers it under every line."
   },
   "shots": [
     {
@@ -357,6 +358,7 @@
       "ratio": 6,
       "attack_ms": 300,
       "release_ms": 1500
-    }
+    },
+    "music_fade_out_s": 0.8
   }
 }
