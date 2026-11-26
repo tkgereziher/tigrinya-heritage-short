@@ -1,10 +1,10 @@
 {
-  "version": 2,
+  "version": 3,
   "title": "King of the Beasts, Aya Anbesa (Is the grass green or blue?)",
   "title_native": "ንጉስ ኣራዊት ኣያ ኣንበሳ (እቲ ሳዕሪ ቀጠልያ ድዩ ሰማያዊ?)",
   "logline": "When a stubborn donkey and a clever leopard quarrel over whether the grass is blue or green, King Aya Anbesa delivers a surprising verdict that teaches a timeless lesson about wasting wisdom on fools.",
   "audience": "Tigrinya-speaking families in the diaspora and home regions watching on mobile screens, especially parents sharing heritage tales with children aged 6–12.",
-  "intent": "To delight audiences with a humorous fable and leave them reflecting on the wisdom of avoiding pointless arguments with those who refuse to see the truth.",
+  "intent": "Revised after user test 1: viewers are moved by the lion's wisdom (not amused). They should follow the twist and leave with the lesson: don't waste your wisdom and time arguing with someone who refuses to see.",
   "language": {
     "code": "ti",
     "name": "Tigrinya",
@@ -338,11 +338,12 @@
   "end_card": {
     "lines": [
       "ንጉስ ኣራዊት ኣያ ኣንበሳ",
+      "Don't waste your wisdom arguing with someone who refuses to see.",
       "A traditional Tigrinya fable",
       "Made with AI: Gemini TTS, FLUX.2 klein, Wan 2.2, ACE-Step 1.5",
       "All characters are fictional animals"
     ],
-    "duration_s": 4
+    "duration_s": 5
   },
   "render": {
     "fps": 24,

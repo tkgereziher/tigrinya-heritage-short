@@ -25,15 +25,34 @@
 
 **Why every shot exists:** see `reason` on each shot in storyboard.json.
 
-## 3. User test 1: radio cut (`outputs/radio/radio_cut.mp4`, storyboard v1)
-| Who (role, not full name) | How (in person / Slack) | What they said | Where they reacted |
+## 3. User test 1: first cut (storyboard v2, 83.4 s, shared 2026-11-25 evening)
+Verbatim responses. Names withheld; relationship and channel to be filled in.
+
+| Viewer | How | What they said (verbatim) | Reading |
 |---|---|---|---|
-| 1. | | | |
-| 2. | | | |
-| 3. | | | |
+| 1 | <channel> | "Wawww no laughing at all its very touching end of story 👍" | Moved; read the ending as touching, **not funny** |
+| 2 | <channel> | "ይካዓረኒሎ 😁 ... it's in great sync though" | Amused; narration/picture/subtitle **timing works**. Possibly quoting how S07 «ይካትዓኒ ኣሎ» sounded (to confirm) |
+| 3 | <channel> | "I didn't lough bro" | **No laugh** |
+| 4 | <channel> | «ነብሪ ምስ ኣድጊ ለይጋነ😁 / ሳዕሪ ሰማያዊ እዩ ኢሉ እንታይ እዩ ዝበለ / ሰብ ናብ ሰቡ ዝብኢ ናብ ገረቡ ነገር እያ😜» | Enjoyed it, but **asked what the "grass is blue" verdict meant**; answered with a proverb about keeping to your own kind |
 
 **Insights:**
-**Changes made (storyboard v1 → v2):** shot / field / before → after, and why
+1. **The comedy intent failed.** I expected the lion's verdict to get a laugh. 0 of 4 reported laughing; two said
+   explicitly that they didn't, and one called the ending *touching*. The audience reads this fable as wisdom, not a joke.
+2. **The lesson isn't clear enough.** Viewer 4 asked what the verdict meant. The lesson is spoken once (S11) at the
+   lively pace adopted in E3b for length, so the most important line is the most rushed.
+3. **Sync works** (viewer 2). Picture cut to the measured voice track does its job, so keep that approach.
+4. Viewer 4's reply is itself a proverb, so the audience thinks in proverbs. A clearly stated moral fits how they
+   already talk about stories.
+5. **Pronunciation:** viewer 2's «ይካዓረኒሎ» is how the TTS said S07's «ይካትዓኒ ኣሎ»: it dropped the ት and merged the
+   two words. A native listener caught it; I could not have from the waveform. That is the one concrete defect they named.
+
+**Decisions (storyboard v2 → v3):**
+| What | Before | After | Why |
+|---|---|---|---|
+| `intent` | "they laugh at the verdict, then get the twist" | moved by the lion's wisdom, leave with the lesson | 0/4 laughed, 1 called it touching. The story works, my *intent* was wrong, so the intent changes, not the story |
+| `end_card.lines` | title, credits | + "Don't waste your wisdom arguing with someone who refuses to see." | viewer 4 asked what the verdict meant; state the moral in plain words (text, no TTS cost) |
+| S07 narration | «… ይካትዓኒ ኣሎ» mispronounced | chosen from 3 variants (EXPERIMENTS.md E8) | viewer 2 |
+| Kept | sync, pacing, shot order | unchanged | viewer 2: "in great sync" |
 
 ## 4. User test 2: near-final cut (storyboard vN)
 | Who | How | What they said | Where they reacted |
