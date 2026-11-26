@@ -35,14 +35,20 @@ def main() -> None:
     ap.add_argument("--out", default=str(ROOT / "outputs" / "music" / "candidates"))
     ap.add_argument("--acestep", default="ACE-Step-1.5", help="path to the cloned ACE-Step-1.5 repo")
     ap.add_argument("--dit", default="acestep-v15-turbo")
-    ap.add_argument("--lm", default="acestep-5Hz-lm-0.6B", help="planner LM; 'none' to skip it")
+    ap.add_argument("--lm", default="none",
+                    help="planner LM, e.g. acestep-5Hz-lm-1.7B (what the auto-download fetches); default none")
     ap.add_argument("--seeds", default="", help="override cue seeds, e.g. 11,22,33")
-    ap.add_argument("--offload", action="store_true", help="CPU offload + int8 for small GPUs")
+    ap.add_argument("--offload", action="store_true", help="offload idle sub-models (VAE, text encoder) to CPU")
+    ap.add_argument("--int8", action="store_true", help="int8 weight quantization (gave NaNs with fp16 on T4, F12)")
+    ap.add_argument("--dtype", default="float32", choices=["float32", "float16", "bfloat16"],
+                    help="float32 on pre-Ampere GPUs (T4): fp16 produced all-NaN latents (FAILURES.md F12)")
     a = ap.parse_args()
 
     # Kaggle's Jupyter exports MPLBACKEND=module://matplotlib_inline..., which a separate venv can't load,
     # and ACE-Step imports matplotlib indirectly (via lightning/torchmetrics). FAILURES.md F11.
     os.environ["MPLBACKEND"] = "Agg"
+    # ACE-Step reads its compute dtype from this variable (its own NaN error message names it).
+    os.environ["ACESTEP_DTYPE"] = a.dtype
 
     import torch
     from acestep.handler import AceStepHandler
@@ -59,7 +65,9 @@ def main() -> None:
     dit = AceStepHandler()
     want = {"project_root": root, "config_path": a.dit, "device": "cuda"}
     if a.offload:
-        want.update({"offload_to_cpu": True, "quantization": "int8_weight_only"})
+        want["offload_to_cpu"] = True
+    if a.int8:
+        want["quantization"] = "int8_weight_only"
     # Pass only the arguments this ACE-Step version accepts (the API was read from docs, not tested).
     accepted = inspect.signature(dit.initialize_service).parameters
     kw = want if any(p.kind == p.VAR_KEYWORD for p in accepted.values()) else {k: v for k, v in want.items() if k in accepted}
@@ -91,7 +99,14 @@ def main() -> None:
         try:
             tmp = out / "_tmp"
             res = generate_music(dit, llm, p, c, save_dir=str(tmp))
-            for seed, audio in zip(seeds, res.audios):
+            audios = getattr(res, "audios", None) or []
+            if not audios:
+                # generate_music catches its own errors and returns an empty result; an empty result
+                # must be logged as a failure, not "ok []" (my bug, first T4 run).
+                why = next((str(getattr(res, k)) for k in ("error", "status_message", "message", "status")
+                            if getattr(res, k, None)), "no audio returned (see ACE-Step log above)")
+                raise RuntimeError(why[:400])
+            for seed, audio in zip(seeds, audios):
                 dst = out / f"{cue['id']}_s{seed}.wav"
                 shutil.move(audio["path"], dst)
                 dst.with_suffix(".json").write_text(json.dumps(
@@ -106,7 +121,8 @@ def main() -> None:
         rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "stage": "music", "shot": None,
                "provider": "kaggle", "model": f"ACE-Step-1.5/{a.dit}+{a.lm}", "seed": seeds,
                "params": {"caption": cue["caption"], "bpm": cue.get("bpm"), "key": cue.get("key"),
-                          "duration_s": cue["duration_s"], "batch": len(seeds), "offload": a.offload},
+                          "duration_s": cue["duration_s"], "batch": len(seeds), "offload": a.offload,
+                          "int8": a.int8, "dtype": a.dtype},
                "latency_s": round(dt, 1), "gpu_s": round(dt, 1), "gpu": "T4" if "T4" in gpu else gpu,
                "cost_usd": 0.0, "list_price_usd": None, "ok": ok, "output": paths, "error": err}
         with log.open("a", encoding="utf-8") as f:

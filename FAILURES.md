@@ -105,6 +105,22 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
 - **Lesson:** an isolated venv isolates packages, not environment variables. Every subprocess inherits the
   notebook's env.
 
+### F12. ACE-Step on a T4: all-NaN audio in fp16 + int8, and my script logged it as "ok" (2026-11-26)
+- **What happened:** the model downloaded (28 files, about 10 GB in 27 s) and loaded in 42 s. ACE-Step detected the
+  pre-Ampere T4 and switched to float16 with eager attention, and my `--offload` flag also applied int8 weight
+  quantization. Diffusion took 9.2 s for 3 × 90 s (1.14 s/step), then decoding failed: `Generation produced NaN or
+  Inf latents (shape=[3, 2250, 64], dtype=torch.float16, nan=432000)`. Every value was NaN.
+- **My bug:** `generate_music` catches its own exception and returns an empty result. My script took that as
+  success and logged `ok: true, output: []` ("score: ok [] in 18s"). A failed generation would have shown up in
+  COSTS.md as a successful call.
+- **Also:** the planner LM never ran (`llm_initialized=False`). I asked for `acestep-5Hz-lm-0.6B`, but the
+  auto-download fetches `acestep-5Hz-lm-1.7B`.
+- **Fixed:** `--dtype float32` by default (sets `ACESTEP_DTYPE`, the fix ACE-Step's own error message names);
+  int8 split into its own `--int8` flag, off by default; CPU offload kept for the idle VAE and text encoder; the
+  planner LM off by default; an empty result raises and is logged `ok: false` with the reason.
+- **Lesson:** this is the same T4 lesson as fp16 for Wan (kaggle/wan22_i2v.py checks for NaN frames). On pre-Ampere
+  GPUs, check outputs for NaN, and never trust a library's return value as success without checking the payload.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call

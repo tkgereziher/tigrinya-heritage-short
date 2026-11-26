@@ -45,7 +45,7 @@ Kaggle's image runs Python 3.13, but ACE-Step needs 3.11–3.12 (FAILURES.md F10
 !pip install -q uv
 !cd ACE-Step-1.5 && uv python install 3.12 && uv sync --python 3.12
 !ACE-Step-1.5/.venv/bin/python -c "import torch, acestep; print('torch', torch.__version__, 'cuda', torch.cuda.is_available())"
-!ACE-Step-1.5/.venv/bin/python tigrinya-heritage-short/kaggle/acestep_music.py --acestep ACE-Step-1.5 --offload
+!ACE-Step-1.5/.venv/bin/python tigrinya-heritage-short/kaggle/acestep_music.py --acestep ACE-Step-1.5 --offload --dtype float32
 !cd tigrinya-heritage-short && zip -qr /kaggle/working/music.zip outputs/music/candidates
 ```
 Unzip `music.zip` into the local repo (`outputs/music/candidates/`), run `python film.py ingest`, listen to
