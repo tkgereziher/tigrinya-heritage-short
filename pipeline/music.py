@@ -32,4 +32,4 @@ def run(sb: dict, force: bool = False) -> None:
         return
     run_ff(["-i", str(src), "-ar", "48000", "-ac", "2", str(score)])
     cache.put(f"{STAGE}/score", digest)
-    say(STAGE, f"score = {chosen}  ({sb['music'].get('chosen_reason', 'no reason recorded yet')})")
+    say(STAGE, f"score = {chosen}  ({sb['music'].get('chosen_reason', 'It was chosen.')})")
