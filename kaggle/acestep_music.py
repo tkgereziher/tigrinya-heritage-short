@@ -18,6 +18,7 @@ the Gradio UI (`acestep`) with the same caption/bpm/key/seed works; log the call
 from __future__ import annotations
 
 import argparse
+import inspect
 import json
 import shutil
 import time
@@ -51,13 +52,26 @@ def main() -> None:
 
     t_load = time.time()
     dit = AceStepHandler()
-    kw = {"offload_to_cpu": True, "quantization": "int8_weight_only"} if a.offload else {}
-    dit.initialize_service(project_root=root, config_path=a.dit, device="cuda", **kw)
+    want = {"project_root": root, "config_path": a.dit, "device": "cuda"}
+    if a.offload:
+        want.update({"offload_to_cpu": True, "quantization": "int8_weight_only"})
+    # Pass only the arguments this ACE-Step version accepts (the API was read from docs, not tested).
+    accepted = inspect.signature(dit.initialize_service).parameters
+    kw = want if any(p.kind == p.VAR_KEYWORD for p in accepted.values()) else {k: v for k, v in want.items() if k in accepted}
+    dropped = sorted(set(want) - set(kw))
+    if dropped:
+        print(f"initialize_service does not accept {dropped}; continuing without them")
+    print("initialize_service ->", dit.initialize_service(**kw))
     llm = None
     if a.lm != "none":
-        from acestep.llm_inference import LLMHandler
-        llm = LLMHandler()
-        llm.initialize(checkpoint_dir=str(Path(root) / "checkpoints"), lm_model_path=a.lm, backend="pt", device="cuda")
+        try:
+            from acestep.llm_inference import LLMHandler
+            llm = LLMHandler()
+            llm.initialize(checkpoint_dir=str(Path(root) / "checkpoints"), lm_model_path=a.lm, backend="pt", device="cuda")
+        except Exception as e:  # noqa: BLE001
+            # The planner LM is optional: the DiT alone still generates from the caption.
+            print(f"LM planner unavailable ({str(e)[:200]}); generating without it")
+            llm = None
     print(f"ACE-Step loaded on {gpu} in {time.time() - t_load:.0f}s")
 
     for cue in sb["music"]["cues"]:
