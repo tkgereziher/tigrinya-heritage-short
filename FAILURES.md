@@ -95,6 +95,16 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
 - **Lesson:** a hosted notebook's Python version is a moving dependency like any model ID. Check it
   (`python --version`) as the first cell, and give each tool its own environment.
 
+### F11. ACE-Step import crash: Jupyter's matplotlib backend leaks into the venv (2026-11-26)
+- **What happened:** with F10 fixed (Python 3.12.16, torch 2.10.0+cu128, `cuda True`), importing `acestep.handler`
+  crashed deep in lightning → torchmetrics → matplotlib: `ValueError: Key backend:
+  'module://matplotlib_inline.backend_inline' is not a valid value`. Kaggle's Jupyter exports `MPLBACKEND` for
+  inline plots, and the separate uv venv doesn't have `matplotlib_inline`.
+- **Fixed:** `acestep_music.py` sets `MPLBACKEND=Agg` before importing anything. This is a headless job, so it never
+  needs a GUI backend.
+- **Lesson:** an isolated venv isolates packages, not environment variables. Every subprocess inherits the
+  notebook's env.
+
 <!-- Template for new entries:
 ### Fn. <short title> (date)
 - **What happened:** exact error / symptom, with the runs.jsonl ts if it was a model call

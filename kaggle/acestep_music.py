@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import inspect
 import json
+import os
 import shutil
 import time
 from datetime import datetime, timezone
@@ -38,6 +39,10 @@ def main() -> None:
     ap.add_argument("--seeds", default="", help="override cue seeds, e.g. 11,22,33")
     ap.add_argument("--offload", action="store_true", help="CPU offload + int8 for small GPUs")
     a = ap.parse_args()
+
+    # Kaggle's Jupyter exports MPLBACKEND=module://matplotlib_inline..., which a separate venv can't load,
+    # and ACE-Step imports matplotlib indirectly (via lightning/torchmetrics). FAILURES.md F11.
+    os.environ["MPLBACKEND"] = "Agg"
 
     import torch
     from acestep.handler import AceStepHandler
