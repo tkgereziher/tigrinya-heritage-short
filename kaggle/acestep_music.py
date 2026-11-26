@@ -41,7 +41,7 @@ def main() -> None:
     ap.add_argument("--offload", action="store_true", help="offload idle sub-models (VAE, text encoder) to CPU")
     ap.add_argument("--int8", action="store_true", help="int8 weight quantization (gave NaNs with fp16 on T4, F12)")
     ap.add_argument("--dtype", default="float32", choices=["float32", "float16", "bfloat16"],
-                    help="float32 on pre-Ampere GPUs (T4): fp16 produced all-NaN latents (FAILURES.md F12)")
+                    help="requested compute dtype; ACE-Step 1.5 ignored it on T4 and ran fp16 (fine without int8, F12)")
     a = ap.parse_args()
 
     # Kaggle's Jupyter exports MPLBACKEND=module://matplotlib_inline..., which a separate venv can't load,

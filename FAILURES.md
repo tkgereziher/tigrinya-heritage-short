@@ -115,11 +115,15 @@ What broke, what I tried, what fixed it. Newest at the bottom. Each entry links 
   COSTS.md as a successful call.
 - **Also:** the planner LM never ran (`llm_initialized=False`). I asked for `acestep-5Hz-lm-0.6B`, but the
   auto-download fetches `acestep-5Hz-lm-1.7B`.
-- **Fixed:** `--dtype float32` by default (sets `ACESTEP_DTYPE`, the fix ACE-Step's own error message names);
-  int8 split into its own `--int8` flag, off by default; CPU offload kept for the idle VAE and text encoder; the
-  planner LM off by default; an empty result raises and is logged `ok: false` with the reason.
-- **Lesson:** this is the same T4 lesson as fp16 for Wan (kaggle/wan22_i2v.py checks for NaN frames). On pre-Ampere
-  GPUs, check outputs for NaN, and never trust a library's return value as success without checking the payload.
+- **Changed two things at once:** set `ACESTEP_DTYPE=float32` (the fix ACE-Step's error message names) *and*
+  dropped int8 (now opt-in via `--int8`). CPU offload was kept, the planner LM was off, and an empty result now raises.
+- **Result:** success. 3 candidates × 90 s in **32 s** (diffusion 9.1 s, VAE decode about 12 s, peak VRAM 5.7 GB of 14.6).
+  But the log still says `Dtype: torch.float16`: ACE-Step ignored `ACESTEP_DTYPE` in this version. **The fix was
+  removing int8**: fp16 alone works on a T4, and fp16 + int8 weight quantization produced NaNs. My first explanation
+  (fp16) was wrong. I only know because the log printed the dtype it actually used.
+- **Lesson:** I changed two variables in one run, so the success didn't tell me which one mattered; only the
+  library's own log line did. Read the "what I actually ran with" lines, not just the exit status. And never trust a
+  library's return value as success without checking the payload.
 
 <!-- Template for new entries:
 ### Fn. <short title> (date)
